@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Paragraph Generator — Free English Text Generator for Practice</title>
+  <meta name="description" content="Free random paragraph generator for English learners. Generate English text for reading practice, typing practice, or content placeholder. Create paragraphs instantly.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lucky-brigadeiros-f31330.netlify.app/random-paragraph-generator.html">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/nav.js"></script>
+  <script defer src="/js/tools.js"></script>
+  <meta property="og:title" content="Random Paragraph Generator — Free English Text Generator">
+  <meta property="og:description" content="Generate random English paragraphs for practice, typing, or placeholder text.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Random Paragraph Generator","applicationCategory":"Writer","operatingSystem":"All"}</script>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <h1>Random Paragraph Generator</h1>
+        <p>Generate random English paragraphs for reading practice, typing exercises, or content placeholders. Each paragraph contains natural English sentences for learning.</p>
+      </div>
+      <section class="tool-area" aria-label="Paragraph generator">
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:end">
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--gray-500);display:block;margin-bottom:.3rem">Paragraphs (1-10)</label>
+            <select id="para-count" style="padding:.5rem;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:.95rem">
+              <option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--gray-500);display:block;margin-bottom:.3rem">Sentences per paragraph (2-10)</label>
+            <select id="para-sents" style="padding:.5rem;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:.95rem">
+              <option value="2">2</option><option value="3">3</option><option value="4" selected>4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" id="para-generate">Generate Paragraphs</button>
+          <button class="btn btn-outline" id="para-copy">Copy Text</button>
+        </div>
+        <label for="para-output" class="sr-only">Generated paragraphs</label>
+        <textarea id="para-output" class="tool-textarea" style="margin-top:1rem;min-height:200px" placeholder="Click 'Generate Paragraphs' to create English text..." readonly></textarea>
+      </section>
+      <section>
+        <h2>Why Use a Random Paragraph Generator?</h2>
+        <p>English learners can use this tool to generate natural English text for reading practice, typing speed improvement, or as placeholder content for design projects. Each sentence is written in simple, clear English suitable for intermediate learners.</p>
+        <p>Try combining this with our <a href="/readability-checker.html">Readability Checker</a> to analyze the generated text, or use the <a href="/word-counter.html">Word Counter</a> to track your reading speed.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="footer"><div class="container"><p>ClearWrite Tools — Free English writing tools for learners.</p></div></footer>
+</body>
+</html>

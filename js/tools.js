@@ -318,3 +318,69 @@ if (rdExtraTextarea && document.getElementById("rd-fog")) {
     if (cli) { document.getElementById("rd-cli").textContent = cli.score; }
   }
 }
+
+
+// ---- Random Paragraph Generator ----
+var PARA_SENTENCES = [
+  "Learning English opens up new opportunities for work and travel around the world.",
+  "Reading books every day helps improve your vocabulary and grammar naturally.",
+  "Writing short paragraphs is an excellent way to practice English composition skills.",
+  "The best way to learn a new language is to use it in real conversations every day.",
+  "English is one of the most widely spoken languages in business and education.",
+  "Practicing English with native speakers helps you learn natural expressions and idioms.",
+  "Setting daily goals for English practice will help you make steady progress over time.",
+  "Listening to podcasts in English is a great way to improve your listening comprehension.",
+  "English grammar rules can be confusing at first, but they become easier with regular practice.",
+  "Building a strong vocabulary is essential for clear and effective communication in English.",
+  "Many students find that watching English movies with subtitles helps them learn faster.",
+  "Writing a daily journal in English is a simple habit that leads to big improvements.",
+  "Learning English opens doors to new cultures, friendships, and professional opportunities.",
+  "The key to improving your English writing is to practice regularly and seek feedback.",
+  "Using online tools can help you check your grammar, readability, and word choice.",
+  "English is the language of the internet, science, and international communication.",
+  "Making mistakes is a natural part of learning English and should not discourage you.",
+  "Focus on learning the most common English words first to build a strong foundation.",
+  "Reading news articles in English keeps you informed while improving your language skills.",
+  "Speaking English confidently takes time and consistent practice with real conversations.",
+  "English idioms add color to your language but require understanding their cultural context.",
+  "Using context clues helps you understand unfamiliar words when reading English texts.",
+  "Learning English grammar through examples is often more effective than memorizing rules.",
+  "Many English learners find that teaching others helps reinforce their own understanding.",
+  "Consistent English practice for fifteen minutes a day is better than studying for hours once a week.",
+];
+
+function generateParagraphs(paraCount, sentPerPara) {
+  var result = [];
+  var used = {};
+  for (var p = 0; p < paraCount; p++) {
+    var para = [];
+    for (var s = 0; s < sentPerPara; s++) {
+      var idx = Math.floor(Math.random() * PARA_SENTENCES.length);
+      used[idx] = true;
+      para.push(PARA_SENTENCES[idx]);
+    }
+    result.push(para.join(" "));
+  }
+  return result;
+}
+
+var paraBtn = document.getElementById("para-generate");
+if (paraBtn) {
+  paraBtn.addEventListener("click", function() {
+    var count = parseInt(document.getElementById("para-count").value) || 2;
+    var sents = parseInt(document.getElementById("para-sents").value) || 4;
+    var result = generateParagraphs(Math.min(10, Math.max(1, count)), Math.min(10, Math.max(2, sents)));
+    var out = document.getElementById("para-output");
+    out.value = result.join("\n\n");
+  });
+}
+
+var paraCopy = document.getElementById("para-copy");
+if (paraCopy) {
+  paraCopy.addEventListener("click", function() {
+    var out = document.getElementById("para-output");
+    if (out.value) {
+      navigator.clipboard.writeText(out.value).then(function() { alert("Copied to clipboard!"); });
+    }
+  });
+}
