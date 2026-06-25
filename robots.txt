@@ -1,0 +1,3 @@
+﻿User-agent: *
+Allow: /
+Sitemap: https://cleartools.example.com/sitemap.xml

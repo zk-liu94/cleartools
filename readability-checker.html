@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Readability Checker — Flesch Reading Ease Score for English Learners</title>
+  <meta name="description" content="Free online readability checker for English learners. Get Flesch Reading Ease scores, grade levels, and writing improvement tips. Check how easy your English text is to read.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cleartools.example.com/readability-checker.html">
+  <link rel="stylesheet" href="/css/style.css">
+  <meta property="og:title" content="Readability Checker — Flesch Reading Ease Score">
+  <meta property="og:description" content="Check your English text readability instantly. Flesch Reading Ease score, grade level, and improvement tips for non-native speakers.">
+  <meta property="og:type" content="website">
+  <script defer src="/js/tools.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Readability Checker",
+    "url": "https://cleartools.example.com/readability-checker.html",
+    "applicationCategory": "Writer",
+    "operatingSystem": "All",
+    "browserRequirements": "JavaScript"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container">
+      <a href="/" class="nav-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        ClearWrite
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/word-counter.html">Word Counter</a></li>
+        <li><a href="/readability-checker.html" class="active">Readability Checker</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <h1>Readability Checker (Flesch Reading Ease)</h1>
+        <p>Paste your English text below to find out how easy it is to read. The readability score helps English learners write content that their audience can understand clearly.</p>
+      </div>
+
+      <section class="tool-area" aria-label="Readability checker tool">
+        <label for="readability-input" class="sr-only">Enter your English text to check readability</label>
+        <textarea id="readability-input" class="tool-textarea" placeholder="Paste your English writing here to check its readability score and grade level..." spellcheck="true"></textarea>
+        <div class="tool-actions">
+          <button class="btn btn-outline btn-sm" onclick="clearText('readability-input')">Clear</button>
+        </div>
+
+        <div class="readability-result" id="readability-result">
+          <div class="readability-score" id="rd-score" style="color:#2563eb">60</div>
+          <div class="readability-label" id="rd-label">Standard</div>
+          <div class="readability-desc" id="rd-desc">Plain English.</div>
+          <div class="readability-details">
+            <div class="stat-card">
+              <div class="stat-value" id="rd-grade">0</div>
+              <div class="stat-label">Grade Level</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="rd-syllables">0</div>
+              <div class="stat-label">Avg Syllables/Word</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="rd-sent-len">0</div>
+              <div class="stat-label">Avg Sentence Length</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tool-page-header">
+        <h2>How to Use the Readability Score</h2>
+        <p>The Flesch Reading Ease score ranges from 0 to 100. Higher scores mean easier reading:</p>
+        <ul style="color:var(--gray-700);margin: 1rem 0 1rem 1.5rem;line-height:1.8">
+          <li><strong>90-100</strong> — Very Easy. Suitable for young readers.</li>
+          <li><strong>80-89</strong> — Easy. Conversational English.</li>
+          <li><strong>70-79</strong> — Fairly Easy. Good for general audiences.</li>
+          <li><strong>60-69</strong> — Standard. Plain English for most readers.</li>
+          <li><strong>50-59</strong> — Fairly Difficult. High school level.</li>
+          <li><strong>30-49</strong> — Difficult. College level.</li>
+          <li><strong>0-29</strong> — Very Confusing. Academic or technical.</li>
+        </ul>
+        <p><strong>Tip for English learners:</strong> Aim for a readability score of 60-70 if you are writing for a general audience. Use shorter sentences and simpler words to improve your score.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>ClearWrite Tools — Free English writing tools for learners.</p>
+    </div>
+  </footer>
+</body>
+</html>

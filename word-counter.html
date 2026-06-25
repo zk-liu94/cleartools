@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Counter — Free Online Word Count Tool for English Learners</title>
+  <meta name="description" content="Free online word counter tool. Count words, characters, sentences, paragraphs, and lines in your English text. Features average word and sentence length analysis for non-native speakers.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cleartools.example.com/word-counter.html">
+  <link rel="stylesheet" href="/css/style.css">
+  <meta property="og:title" content="Word Counter — Free Online Word Count Tool">
+  <meta property="og:description" content="Count words, characters, sentences, and paragraphs instantly. Free tool for English learners.">
+  <meta property="og:type" content="website">
+  <script defer src="/js/tools.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Counter",
+    "url": "https://cleartools.example.com/word-counter.html",
+    "applicationCategory": "Writer",
+    "operatingSystem": "All",
+    "browserRequirements": "JavaScript"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container">
+      <a href="/" class="nav-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        ClearWrite
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/word-counter.html" class="active">Word Counter</a></li>
+        <li><a href="/readability-checker.html">Readability Checker</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <h1>Word Counter &amp; Text Analyzer</h1>
+        <p>Paste or type your English text below. See instant stats including word count, character count, sentence count, and more. Designed for English learners.</p>
+      </div>
+
+      <section class="tool-area" aria-label="Word counter tool">
+        <label for="counter-input" class="sr-only">Enter your English text here</label>
+        <textarea id="counter-input" class="tool-textarea" placeholder="Paste or type your English text here to analyze words, characters, sentences, and more..." spellcheck="true"></textarea>
+        <div class="tool-actions">
+          <button class="btn btn-outline btn-sm" onclick="clearText('counter-input')">Clear</button>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-words">0</div>
+            <div class="stat-label">Words</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-chars">0</div>
+            <div class="stat-label">Characters</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-chars-ns">0</div>
+            <div class="stat-label">Characters (no space)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-sentences">0</div>
+            <div class="stat-label">Sentences</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-paragraphs">0</div>
+            <div class="stat-label">Paragraphs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-lines">0</div>
+            <div class="stat-label">Lines</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-avg-word">0</div>
+            <div class="stat-label">Avg Word Length</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-avg-sent">0</div>
+            <div class="stat-label">Avg Sentence Length</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tool-page-header">
+        <h2>Why Word Count Matters for English Learners</h2>
+        <p>For non-native English speakers, tracking word count and sentence length helps you write more clearly. Short sentences are easier to understand, and knowing your average word and sentence length helps you adjust your writing style for your audience.</p>
+        <p>Try to keep your average sentence length under 20 words for better readability. Use shorter words when possible to make your writing clearer for a global audience.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>ClearWrite Tools — Free English writing tools for learners.</p>
+    </div>
+  </footer>
+</body>
+</html>

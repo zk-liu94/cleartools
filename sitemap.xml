@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://cleartools.example.com/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://cleartools.example.com/word-counter.html</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://cleartools.example.com/readability-checker.html</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://cleartools.example.com/blog/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cleartools.example.com/blog/how-to-check-english-writing-readability.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://cleartools.example.com/blog/common-english-writing-mistakes-beginners.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://cleartools.example.com/blog/how-to-expand-english-vocabulary-writing.html</loc>
+    <priority>0.6</priority>
+  </url>
+</urlset>
