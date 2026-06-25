@@ -1,13 +1,12 @@
-﻿// Navigation configuration — edit this to add/remove pages
-var NAV_PAGES = [
+﻿var NAV_PAGES = [
   { href: "/", label: "Home" },
   { href: "/word-counter.html", label: "Word Counter" },
   { href: "/readability-checker.html", label: "Readability" },
   { href: "/text-case-converter.html", label: "Case Converter" },
   { href: "/word-frequency.html", label: "Word Freq" },
-  { href: "/syllable-counter.html", label: "Syllable Counter" },
+  { href: "/syllable-counter.html", label: "Syllables" },
+  { href: "/text-diff-checker.html", label: "Text Diff" },
 ];
-
 document.addEventListener("DOMContentLoaded", function() {
   var ph = document.getElementById("nav-placeholder");
   if (!ph) return;

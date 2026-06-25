@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Diff Checker — Compare Two Texts | ClearWrite Tools</title>
+  <meta name="description" content="Free online text diff checker for English learners. Compare two versions of text, see additions and removals highlighted. Improve your writing by tracking changes.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lucky-brigadeiros-f31330.netlify.app/text-diff-checker.html">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/nav.js"></script>
+  <script defer src="/js/tools.js"></script>
+  <meta property="og:title" content="Text Diff Checker — Compare Two Texts">
+  <meta property="og:description" content="See exactly what changed between two versions of your English text.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Text Diff Checker","applicationCategory":"Writer","operatingSystem":"All"}</script>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <h1>Text Diff Checker</h1>
+        <p>Compare two versions of your English text to see what changed. Green highlights show added text, red shows removed text. Useful for tracking edits and revisions.</p>
+      </div>
+      <section class="tool-area" aria-label="Text diff checker">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--gray-500);display:block;margin-bottom:.3rem">Original Text</label>
+            <textarea id="diff-input-1" class="tool-textarea" style="min-height:180px" placeholder="Paste your original text here..."></textarea>
+          </div>
+          <div>
+            <label style="font-size:.85rem;font-weight:600;color:var(--gray-500);display:block;margin-bottom:.3rem">Revised Text</label>
+            <textarea id="diff-input-2" class="tool-textarea" style="min-height:180px" placeholder="Paste your revised text here..."></textarea>
+          </div>
+        </div>
+        <div class="tool-actions">
+          <button class="btn btn-primary" id="diff-compare">Compare Texts</button>
+          <button class="btn btn-outline btn-sm" onclick="document.getElementById('diff-input-1').value='';document.getElementById('diff-input-2').value='';document.getElementById('diff-output').innerHTML='<p style=\"color:var(--gray-500)\">Enter text in both fields to compare.</p>'">Clear</button>
+        </div>
+        <div id="diff-output" style="margin-top:1.5rem"><p style="color:var(--gray-500)">Enter text in both fields to compare.</p></div>
+      </section>
+      <section>
+        <h2>How to Use Text Diff for English Learning</h2>
+        <p>Paste your original draft in the left box and your revised version in the right box. The tool highlights what you added (green) and removed (red). This helps you see your editing patterns and learn from your revisions.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="footer"><div class="container"><p>ClearWrite Tools — Free English writing tools for learners.</p></div></footer>
+</body>
+</html>

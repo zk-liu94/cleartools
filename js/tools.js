@@ -237,3 +237,84 @@ if (sylTextarea) {
     list.innerHTML = html;
   }
 }
+
+// ---- Text Diff Checker ----
+function diffTexts(text1, text2) {
+  var lines1 = text1.split("\n");
+  var lines2 = text2.split("\n");
+  var maxLen = Math.max(lines1.length, lines2.length);
+  var result = [];
+  for (var i = 0; i < maxLen; i++) {
+    var l1 = lines1[i] || "";
+    var l2 = lines2[i] || "";
+    if (l1 === l2) {
+      if (l1 !== "") result.push({ type: "same", text: l1 });
+    } else {
+      if (l1 !== "") result.push({ type: "removed", text: l1 });
+      if (l2 !== "") result.push({ type: "added", text: l2 });
+    }
+  }
+  return result;
+}
+
+var diffBtn = document.getElementById("diff-compare");
+if (diffBtn) {
+  diffBtn.addEventListener("click", function() {
+    var t1 = document.getElementById("diff-input-1").value;
+    var t2 = document.getElementById("diff-input-2").value;
+    var out = document.getElementById("diff-output");
+    if (!t1 && !t2) { out.innerHTML = "<p style=\"color:var(--gray-500)\">Enter text in both fields to compare.</p>"; return; }
+    var diffs = diffTexts(t1 || "", t2 || "");
+    if (diffs.length === 0) { out.innerHTML = "<p style=\"color:var(--gray-500)\">The two texts are identical.</p>"; return; }
+    var html = "<pre style=\"font-family:monospace;font-size:.9rem;line-height:1.6;white-space:pre-wrap;padding:.5rem;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius)\">";
+    var added = 0, removed = 0;
+    diffs.forEach(function(d) {
+      if (d.type === "added") { added++; html += "<span style=\"background:#d1fae5;color:#065f46;display:block;padding:1px 4px\">+ " + escapeHtml(d.text) + "</span>"; }
+      else if (d.type === "removed") { removed++; html += "<span style=\"background:#fee2e2;color:#991b1b;display:block;padding:1px 4px\">- " + escapeHtml(d.text) + "</span>"; }
+      else { html += "<span style=\"display:block;padding:1px 4px\">  " + escapeHtml(d.text) + "</span>"; }
+    });
+    html += "</pre>";
+    html += "<p style=\"margin-top:.5rem;color:var(--gray-500);font-size:.85rem\">Added: " + added + " lines | Removed: " + removed + " lines</p>";
+    out.innerHTML = html;
+  });
+}
+
+function escapeHtml(str) {
+  var div = document.createElement("div");
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+// ---- Additional Readability Formulas ----
+function calcGunningFog(text) {
+  var s = analyzeText(text);
+  if (!s || s.words < 1) return null;
+  var words = text.toLowerCase().match(/[a-zA-Z\']+(?:-[a-zA-Z]+)*/g) || [];
+  var complex = 0;
+  words.forEach(function(w) { if (countSyllables(w) >= 3) complex++; });
+  var pctHard = (complex / (words.length || 1)) * 100;
+  var fog = 0.4 * (s.avgSentenceLength + pctHard);
+  return { score: Math.round(fog * 10) / 10, complexWords: complex };
+}
+
+function calcColemanLiau(text) {
+  var s = analyzeText(text);
+  if (!s || s.words < 1) return null;
+  var L = (s.charactersNoSpace / (s.words || 1)) * 100;
+  var S = (s.sentences / (s.words || 1)) * 100;
+  var cli = 0.0588 * L - 0.296 * S - 15.8;
+  return { score: Math.round(cli * 10) / 10 };
+}
+
+// Extend readability page if extra divs exist
+var rdExtraTextarea = document.getElementById("readability-input");
+if (rdExtraTextarea && document.getElementById("rd-fog")) {
+  rdExtraTextarea.addEventListener("input", updateExtraReadability);
+  function updateExtraReadability() {
+    var text = rdExtraTextarea.value;
+    var fog = calcGunningFog(text);
+    var cli = calcColemanLiau(text);
+    if (fog) { document.getElementById("rd-fog").textContent = fog.score; document.getElementById("rd-complex").textContent = fog.complexWords; }
+    if (cli) { document.getElementById("rd-cli").textContent = cli.score; }
+  }
+}
