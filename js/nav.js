@@ -7,6 +7,7 @@
   { href: "/syllable-counter.html", label: "Syllables" },
   { href: "/text-diff-checker.html", label: "Text Diff" },
   { href: "/random-paragraph-generator.html", label: "Paragraphs" },
+  { href: "/grammar-checker.html", label: "Grammar" },
 ];
 document.addEventListener("DOMContentLoaded", function() {
   var ph = document.getElementById("nav-placeholder");

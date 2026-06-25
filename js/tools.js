@@ -384,3 +384,70 @@ if (paraCopy) {
     }
   });
 }
+
+// ---- Grammar Checker ----
+var GRAMMAR_RULES = [
+  { pattern: /\b(y[o]u[\u2019a]re|your)\s+[\w]+\b/gi, label: "Your vs You\'re", fix: "Check if you mean \"you are\" (you\'re) or possessive (your)." },
+  { pattern: /\b(their|there|they[\u2019a]re)\s+[\w]+\b/gi, label: "There/Their/They\'re", fix: "\"There\" = place, \"Their\" = belonging, \"They\'re\" = they are." },
+  { pattern: /\b(i[t][\u2019a]s|its)\s+[\w]+\b/gi, label: "Its vs It\'s", fix: "\"It\'s\" = it is, \"Its\" = possessive form of it." },
+  { pattern: /\b(than|then)\s+[\w]+\b/gi, label: "Then vs Than", fix: "\"Than\" is for comparisons, \"Then\" is for time/sequence." },
+  { pattern: /\ba\s+[aeiou][a-z]*\b/gi, label: "A vs An", fix: "Use \"an\" before vowel sounds, not \"a\". Example: \"an apple\" not \"a apple\"." },
+  { pattern: /\ban\s+[^aeiou\s][a-z]*\b/gi, label: "An vs A", fix: "Use \"a\" before consonant sounds, not \"an\". Example: \"a university\" not \"an university\"." },
+  { pattern: /\bdon[\u2019a]t\s+have\s+no\b/gi, label: "Double Negative", fix: "Use \"don\'t have any\" instead of \"don\'t have no\"." },
+  { pattern: /\bcan[\u2019a]t\s+(hardly|barely|scarcely)\b/gi, label: "Double Negative", fix: "Remove \"can\'t\" when using \"hardly/barely/scarcely\". Say \"I can hardly\" not \"I can\'t hardly\"." },
+  { pattern: /\bdifferent\s+than\b/gi, label: "Different From", fix: "Use \"different from\" instead of \"different than\"." },
+  { pattern: /\bbased\s+off\s+of\b/gi, label: "Based On", fix: "Use \"based on\" instead of \"based off of\"." },
+  { pattern: /\b(each|every|either|neither)\s+\w+\s+(are|were|have|do)\b/gi, label: "Subject-Verb Agreement", fix: "Words like each/every/either/neither take singular verbs (is/was/has/does)." },
+  { pattern: /\b([Hh]e|[Ss]he|[Ii]t|[Tt]he\s+\w+)\s+(don[\u2019a]t)\b/gi, label: "Subject-Verb Agreement", fix: "He/she/it uses \"doesn\'t\" not \"don\'t\"." },
+];
+
+function checkGrammar(text) {
+  var issues = [];
+  GRAMMAR_RULES.forEach(function(rule) {
+    var match;
+    rule.pattern.lastIndex = 0;
+    while ((match = rule.pattern.exec(text)) !== null) {
+      var ctxStart = Math.max(0, match.index - 15);
+      var ctxEnd = Math.min(text.length, match.index + match[0].length + 15);
+      var context = (ctxStart > 0 ? "..." : "") + text.substring(ctxStart, ctxEnd) + (ctxEnd < text.length ? "..." : "");
+      issues.push({
+        match: match[0],
+        label: rule.label,
+        fix: rule.fix,
+        context: context,
+        index: match.index
+      });
+    }
+  });
+  return issues;
+}
+
+function escapeHtml2(str) {
+  var d = document.createElement("div");
+  d.appendChild(document.createTextNode(str));
+  return d.innerHTML;
+}
+
+var grammarBtn = document.getElementById("grammar-check");
+if (grammarBtn) {
+  grammarBtn.addEventListener("click", function() {
+    var text = document.getElementById("grammar-input").value;
+    var out = document.getElementById("grammar-results");
+    if (!text.trim()) { out.innerHTML = "<p style=\"color:var(--gray-500)\">Enter some English text to check for grammar issues.</p>"; return; }
+    var issues = checkGrammar(text);
+    if (issues.length === 0) {
+      out.innerHTML = "<div style=\"padding:1rem;background:#d1fae5;border-radius:var(--radius);color:#065f46\"><strong>No common grammar issues found!</strong> Your text looks good.</div>";
+      return;
+    }
+    var html = "<p style=\"margin-bottom:.75rem;font-weight:600\">Found " + issues.length + " potential issue(s):</p>";
+    issues.forEach(function(issue) {
+      html += '<div style="background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:1rem;margin-bottom:.75rem">';
+      html += '<div style="display:inline-block;background:#fef3c7;color:#92400e;padding:.15rem .5rem;border-radius:4px;font-size:.8rem;font-weight:600;margin-bottom:.5rem">' + escapeHtml2(issue.label) + '</div>';
+      html += '<div style="margin-bottom:.25rem"><span style="background:#fee2e2;padding:.1rem .3rem;border-radius:3px;font-family:monospace;font-size:.9rem">' + escapeHtml2(issue.match) + '</span></div>';
+      html += '<div style="font-size:.85rem;color:var(--gray-700);margin-bottom:.35rem">Context: <span style="font-family:monospace;font-size:.8rem;background:var(--gray-50);padding:.1rem .3rem;border-radius:3px">' + escapeHtml2(issue.context) + '</span></div>';
+      html += '<div style="font-size:.85rem;color:var(--gray-500)">' + escapeHtml2(issue.fix) + '</div>';
+      html += '</div>';
+    });
+    out.innerHTML = html;
+  });
+}
