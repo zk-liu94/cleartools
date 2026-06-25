@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Frequency Counter — Analyze Your English Writing | ClearWrite Tools</title>
+  <meta name="description" content="Free word frequency counter for English learners. See which words you use most often and improve your vocabulary diversity.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lucky-brigadeiros-f31330.netlify.app/word-frequency.html">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/nav.js"></script>
+  <script defer src="/js/tools.js"></script>
+  <meta property="og:title" content="Word Frequency Counter — Analyze Your Writing">
+  <meta property="og:description" content="See your most used words displayed as a visual chart.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Frequency Counter",
+    "applicationCategory": "Writer",
+    "operatingSystem": "All"
+  }
+  </script>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <h1>Word Frequency Counter</h1>
+        <p>Analyze your English writing to see which words you use most often. This helps English learners identify overused words and expand their vocabulary.</p>
+      </div>
+      <section class="tool-area" aria-label="Word frequency analyzer">
+        <label for="freq-input" class="sr-only">Enter your English text to analyze word frequency</label>
+        <textarea id="freq-input" class="tool-textarea" placeholder="Paste your English text here to see which words you use most often..." spellcheck="true"></textarea>
+        <div class="tool-actions"><button class="btn btn-outline btn-sm" onclick="clearText('freq-input')">Clear</button></div>
+        <div id="freq-list" style="margin-top:1.5rem"><p style="color:var(--gray-500)">Enter text above to see word frequency.</p></div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer"><div class="container"><p>ClearWrite Tools — Free English writing tools for learners.</p></div></footer>
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Case Converter — Convert to UPPER, lower, Title Case | ClearWrite Tools</title>
+  <meta name="description" content="Free online text case converter for English learners. Convert text to uppercase, lowercase, title case, sentence case, and more instantly.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lucky-brigadeiros-f31330.netlify.app/text-case-converter.html">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/nav.js"></script>
+  <script defer src="/js/tools.js"></script>
+  <meta property="og:title" content="Text Case Converter — Free Online Tool">
+  <meta property="og:description" content="Convert text between uppercase, lowercase, title case, sentence case, and more.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Text Case Converter",
+    "applicationCategory": "Writer",
+    "operatingSystem": "All"
+  }
+  </script>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <h1>Text Case Converter</h1>
+        <p>Convert your text between different cases. Useful for English learners who want to see how case formatting works in different contexts.</p>
+      </div>
+      <section class="tool-area" aria-label="Case converter tool">
+        <label for="case-input" class="sr-only">Enter your text to convert</label>
+        <textarea id="case-input" class="tool-textarea" placeholder="Type or paste text here to see it converted to different cases..." spellcheck="false"></textarea>
+        <div class="tool-actions"><button class="btn btn-outline btn-sm" onclick="clearText('case-input')">Clear</button></div>
+        <div style="margin-top:1.5rem;display:grid;gap:1rem">
+          <div><label style="font-size:.85rem;font-weight:600;color:var(--gray-500)">UPPER CASE</label><input id="case-upper" class="tool-textarea" style="min-height:40px;margin-top:.3rem" readonly></div>
+          <div><label style="font-size:.85rem;font-weight:600;color:var(--gray-500)">lower case</label><input id="case-lower" class="tool-textarea" style="min-height:40px;margin-top:.3rem" readonly></div>
+          <div><label style="font-size:.85rem;font-weight:600;color:var(--gray-500)">Title Case</label><input id="case-title" class="tool-textarea" style="min-height:40px;margin-top:.3rem" readonly></div>
+          <div><label style="font-size:.85rem;font-weight:600;color:var(--gray-500)">Sentence case</label><input id="case-sentence" class="tool-textarea" style="min-height:40px;margin-top:.3rem" readonly></div>
+        </div>
+      </section>
+      <section>
+        <h2>Why Text Case Matters for English Learners</h2>
+        <p>Understanding when to use uppercase, lowercase, and title case is essential for writing proper English. Use this tool to check your formatting and learn the rules by example.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="footer"><div class="container"><p>ClearWrite Tools — Free English writing tools for learners.</p></div></footer>
+</body>
+</html>

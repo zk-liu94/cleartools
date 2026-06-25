@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syllable Counter — Count Syllables in English Words | ClearWrite Tools</title>
+  <meta name="description" content="Free syllable counter for English learners. Count syllables in any text, see syllable counts per word, and improve your readability score.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://lucky-brigadeiros-f31330.netlify.app/syllable-counter.html">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/nav.js"></script>
+  <script defer src="/js/tools.js"></script>
+  <meta property="og:title" content="Syllable Counter — Free English Learning Tool">
+  <meta property="og:description" content="Count syllables in any English text. Improve your writing readability.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Syllable Counter",
+    "applicationCategory": "Writer",
+    "operatingSystem": "All"
+  }
+  </script>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <h1>Syllable Counter</h1>
+        <p>Count the number of syllables in your English text. Understanding syllable counts helps you write more readable content for your audience.</p>
+      </div>
+      <section class="tool-area" aria-label="Syllable counter tool">
+        <label for="syllable-input" class="sr-only">Enter your English text to count syllables</label>
+        <textarea id="syllable-input" class="tool-textarea" placeholder="Type or paste English text here to count syllables for each word..." spellcheck="true"></textarea>
+        <div class="tool-actions"><button class="btn btn-outline btn-sm" onclick="clearText('syllable-input')">Clear</button></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-value" id="syl-total">0</div><div class="stat-label">Total Syllables</div></div>
+          <div class="stat-card"><div class="stat-value" id="syl-words">0</div><div class="stat-label">Words</div></div>
+          <div class="stat-card"><div class="stat-value" id="syl-avg">0</div><div class="stat-label">Avg Syllables/Word</div></div>
+        </div>
+        <div id="syl-list"><p style="color:var(--gray-500);margin-top:1rem">Enter text above to see syllable count per word.</p></div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer"><div class="container"><p>ClearWrite Tools — Free English writing tools for learners.</p></div></footer>
+</body>
+</html>

@@ -158,3 +158,82 @@ function clearText(areaId) {
   var event = new Event('input');
   document.getElementById(areaId).dispatchEvent(event);
 }
+
+// ---- Text Case Converter ----
+function convertCase(text, type) {
+  if (!text) return "";
+  switch(type) {
+    case "upper": return text.toUpperCase();
+    case "lower": return text.toLowerCase();
+    case "title": return text.toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+    case "sentence": return text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, function(c) { return c.toUpperCase(); });
+    case "alternating": return text.split("").map(function(c, i) { return i % 2 === 0 ? c.toLowerCase() : c.toUpperCase(); }).join("");
+    case "camel": return text.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, function(m, c) { return c.toUpperCase(); }).replace(/[^a-zA-Z0-9]/g, "");
+  }
+}
+
+var caseTextarea = document.getElementById("case-input");
+if (caseTextarea) {
+  caseTextarea.addEventListener("input", updateCase);
+  function updateCase() {
+    var text = caseTextarea.value;
+    document.getElementById("case-upper").value = convertCase(text, "upper");
+    document.getElementById("case-lower").value = convertCase(text, "lower");
+    document.getElementById("case-title").value = convertCase(text, "title");
+    document.getElementById("case-sentence").value = convertCase(text, "sentence");
+  }
+}
+
+// ---- Word Frequency Display ----
+var freqTextarea = document.getElementById("freq-input");
+if (freqTextarea) {
+  freqTextarea.addEventListener("input", updateFrequency);
+  function updateFrequency() {
+    var text = freqTextarea.value;
+    var list = document.getElementById("freq-list");
+    if (!text.trim()) { list.innerHTML = "<p style=\"color:var(--gray-500)\">Enter text above to see word frequency.</p>"; return; }
+    var freq = wordFrequency(text);
+    if (freq.length === 0) { list.innerHTML = "<p style=\"color:var(--gray-500)\">No words found.</p>"; return; }
+    var max = freq[0][1];
+    var html = "<table style=\"width:100%;border-collapse:collapse\"><thead><tr><th style=\"text-align:left;padding:.5rem;border-bottom:2px solid var(--gray-200)\">Word</th><th style=\"text-align:right;padding:.5rem;border-bottom:2px solid var(--gray-200)\">Count</th></tr></thead><tbody>";
+    freq.forEach(function(item) {
+      var pct = (item[1] / max) * 100;
+      html += "<tr><td style=\"padding:.4rem .5rem;border-bottom:1px solid var(--gray-100)\">" + item[0] + "</td><td style=\"padding:.4rem .5rem;border-bottom:1px solid var(--gray-100);text-align:right\"><div style=\"display:inline-block;height:20px;width:" + pct + "%;min-width:20px;background:var(--primary);border-radius:3px;color:white;font-size:.8rem;line-height:20px;padding:0 4px\">" + item[1] + "</div></td></tr>";
+    });
+    html += "</tbody></table>";
+    list.innerHTML = html;
+  }
+}
+
+// ---- Syllable Counter ----
+var sylTextarea = document.getElementById("syllable-input");
+if (sylTextarea) {
+  sylTextarea.addEventListener("input", updateSyllable);
+  function updateSyllable() {
+    var text = sylTextarea.value;
+    var words = text.trim().match(/[a-zA-Z\']+(?:-[a-zA-Z]+)*/g) || [];
+    var total = 0;
+    var wordData = [];
+    words.forEach(function(w) {
+      var count = countSyllables(w);
+      total += count;
+      wordData.push({ word: w, syllables: count });
+    });
+    document.getElementById("syl-total").textContent = total;
+    document.getElementById("syl-words").textContent = wordData.length;
+    document.getElementById("syl-avg").textContent = wordData.length > 0 ? (total / wordData.length).toFixed(1) : "0";
+    
+    var list = document.getElementById("syl-list");
+    if (wordData.length === 0) {
+      list.innerHTML = "<p style=\"color:var(--gray-500);margin-top:1rem\">Enter text above to see syllable count per word.</p>";
+      return;
+    }
+    var html = "<div style=\"margin-top:1rem;display:flex;flex-wrap:wrap;gap:.3rem\">";
+    wordData.forEach(function(item) {
+      var sz = item.syllables >= 4 ? "color:#dc2626;font-weight:700" : item.syllables >= 2 ? "color:#d97706" : "color:var(--gray-700)";
+      html += "<span style=\"background:var(--gray-50);border:1px solid var(--gray-200);padding:.15rem .5rem;border-radius:4px;font-size:.85rem;" + sz + "\">" + item.word + "<span style=\"margin-left:.3rem;opacity:.6\">(" + item.syllables + ")</span></span>";
+    });
+    html += "</div>";
+    list.innerHTML = html;
+  }
+}
