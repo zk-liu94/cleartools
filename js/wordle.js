@@ -82,13 +82,29 @@ var WORDLE_ANSWERS = [
   "write","wrote","yacht","yield","young","youth","zebra"
 ];
 
+// Valid guesses (same as answers list)
+var WORDLE_VALID = WORDLE_ANSWERS;
+
 // ---- Wordle Game State ----
-// var wlCurrentRow = 0;
-// var wlCurrentCol = 0;
-// var wlAnswer = "";
-// var wlGameOver = false;
-// 
+var wlCurrentRow = 0;
+var wlCurrentCol = 0;
+var wlAnswer = "";
+var wlGameOver = false;
+var wlScore = 0;
+var wlWordNumber = 1;
+var wlGamesPlayed = 0;
+var wlGamesWon = 0;
+var wlStreak = 0;
+var wlBestStreak = 0;
+
 function wordleInit() {
+  // Load saved stats
+  wlScore = parseInt(localStorage.getItem("wlScore")) || 0;
+  wlStreak = parseInt(localStorage.getItem("wlStreak")) || 0;
+  wlBestStreak = parseInt(localStorage.getItem("wlBestStreak")) || 0;
+  wlGamesPlayed = parseInt(localStorage.getItem("wlGamesPlayed")) || 0;
+  wlGamesWon = parseInt(localStorage.getItem("wlGamesWon")) || 0;
+  wlWordNumber = parseInt(localStorage.getItem("wlWordNumber")) || 1;
   wlAnswer = WORDLE_ANSWERS[Math.floor(Math.random() * WORDLE_ANSWERS.length)];
   wlCurrentRow = 0;
   wlCurrentCol = 0;
@@ -119,7 +135,6 @@ function wordleSubmitGuess() {
     guess += cell.textContent.toLowerCase();
   }
   if (WORDLE_VALID.indexOf(guess) === -1) { wordleShowMessage("Not in word list"); return; }
-  wlGamesPlayed++;
   var result = wordleCheckGuess(guess, wlAnswer);
   for (var c2 = 0; c2 < 5; c2++) {
     var cell2 = document.getElementById("wl-cell-" + wlCurrentRow + "-" + c2);
@@ -141,9 +156,9 @@ function wordleSubmitGuess() {
 function wordleUpdateKey(letter, status) {
   var key = document.getElementById("wl-key-" + letter);
   if (key) {
-    if (status === "correct") { key.className = "wl-key wl-key-correct"; }
-    else if (status === "present" && !key.classList.contains("wq-key-correct")) { key.className = "wl-key wl-key-present"; }
-    else if (!key.classList.contains("wq-key-correct") && !key.classList.contains("wq-key-present")) { key.className = "wl-key wl-key-absent"; }
+    if (status === "correct") { key.className = "wq-key wq-key-correct"; }
+    else if (status === "present" && !key.classList.contains("wq-key-correct")) { key.className = "wq-key wq-key-present"; }
+    else if (!key.classList.contains("wq-key-correct") && !key.classList.contains("wq-key-present")) { key.className = "wq-key wq-key-absent"; }
   }
 }
 
@@ -192,7 +207,7 @@ function wordleRenderKeyboard() {
     row.className = "wq-kb-row";
     if (ri === 2) {
       var enter = document.createElement("button");
-      enter.className = "wl-key wl-key-wide";
+      enter.className = "wq-key wq-key-wide";
       enter.textContent = "Enter";
       enter.onclick = function() { wordleSubmitGuess(); };
       row.appendChild(enter);
@@ -207,13 +222,80 @@ function wordleRenderKeyboard() {
     }
     if (ri === 2) {
       var del = document.createElement("button");
-      del.className = "wl-key wl-key-wide";
+      del.className = "wq-key wq-key-wide";
       del.textContent = "Del";
       del.onclick = function() { wordleDeleteLetter(); };
       row.appendChild(del);
     }
     kb.appendChild(row);
   });
+}
+
+// ---- Stats functions ----
+function wlSaveStats() {
+  localStorage.setItem("wlScore", wlScore);
+  localStorage.setItem("wlStreak", wlStreak);
+  localStorage.setItem("wlBestStreak", wlBestStreak);
+  localStorage.setItem("wlGamesPlayed", wlGamesPlayed);
+  localStorage.setItem("wlGamesWon", wlGamesWon);
+  localStorage.setItem("wlWordNumber", wlWordNumber);
+}
+
+function wlUpdateDisplay() {
+  document.getElementById("wl-score-display").textContent = wlScore;
+  document.getElementById("wl-streak-display").textContent = wlStreak;
+  document.getElementById("wl-beststreak-display").textContent = wlBestStreak;
+  document.getElementById("wl-games-display").textContent = wlGamesPlayed;
+  document.getElementById("wl-winrate-display").textContent = wlGamesPlayed > 0 ? Math.round(wlGamesWon / wlGamesPlayed * 100) + "%" : "0%";
+}
+
+function wordleResetStats() {
+  if (!confirm("Reset all stats and progress?")) return;
+  wlScore = 0;
+  wlWordNumber = 1;
+  wlGamesPlayed = 0;
+  wlGamesWon = 0;
+  wlStreak = 0;
+  wlBestStreak = 0;
+  wlSaveStats();
+  wlUpdateDisplay();
+  wordleInit();
+}
+
+function wordleNextWord() {
+  document.getElementById("wl-next-btn").style.display = "none";
+  wlWordNumber++;
+  document.getElementById("wl-level-display").textContent = "Word #" + wlWordNumber;
+  wlSaveStats();
+  wordleInit();
+}
+
+// ---- Check guess against answer ----
+function wordleCheckGuess(guess, answer) {
+  var result = [];
+  var answerChars = answer.split("");
+  var guessChars = guess.split("");
+  // First pass: mark exact matches
+  for (var i = 0; i < 5; i++) {
+    if (guessChars[i] === answerChars[i]) {
+      result[i] = "correct";
+      answerChars[i] = null;
+    } else {
+      result[i] = null;
+    }
+  }
+  // Second pass: mark present (wrong position)
+  for (var i = 0; i < 5; i++) {
+    if (result[i] === "correct") continue;
+    var idx = answerChars.indexOf(guessChars[i]);
+    if (idx !== -1) {
+      result[i] = "present";
+      answerChars[idx] = null;
+    } else {
+      result[i] = "absent";
+    }
+  }
+  return result;
 }
 
 // ---- Physical keyboard support ----
