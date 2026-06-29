@@ -1,6 +1,26 @@
 ﻿// MailerLite Universal
 (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account', '2477552');
 
+// MailerLite subscribe handler (called from form onsubmit)
+function mlSubscribe(event, formId) {
+  event.preventDefault();
+  var form = document.getElementById(formId);
+  var email = form.querySelector('input[name="email"]').value;
+  var successEl = document.getElementById('ml-success-' + formId.replace('ml-form-', ''));
+  if (typeof ml !== 'undefined') {
+    ml('subscribe', { email: email, form: 'IPfNga' });
+  } else {
+    // Fallback: direct POST
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://assets.mailerlite.com/jsonp/2477552/forms/IPfNga/subscribe');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({ email: email }));
+  }
+  form.style.display = 'none';
+  if (successEl) successEl.style.display = 'block';
+  return false;
+}
+
 var NAV_PAGES = [
   { href: "/", label: "Home" },
   { href: "/word-counter.html", label: "Word Counter" },
@@ -30,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var sub = document.createElement("section");
     sub.className = "subscribe-section";
     sub.id = "subscribe-section-injected";
-    sub.innerHTML = '<h2>Get Weekly English Writing Tips</h2><p>Join English learners who improve their writing with free tips, tools, and resources delivered to your inbox every week.</p><div class="ml-embedded" data-form="IPfNga"></div><p class="subscribe-small">No spam. Unsubscribe anytime.</p>';
+    sub.innerHTML = '<h2>Get Weekly English Writing Tips</h2><p>Join English learners who improve their writing with free tips, tools, and resources delivered to your inbox every week.</p><form class="subscribe-form" id="ml-form-tool" onsubmit="return mlSubscribe(event, \'ml-form-tool\')"><input type="email" name="email" placeholder="Your email address" required><button type="submit">Subscribe Free</button></form><div class="ml-success" id="ml-success-tool" style="display:none;color:#6aaa64;font-weight:700">Thanks! Check your inbox to confirm.</div><p class="subscribe-small">No spam. Unsubscribe anytime.</p>';
     footer.parentNode.insertBefore(sub, footer);
   }
 });
