@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var sub = document.createElement("section");
     sub.className = "subscribe-section";
     sub.id = "subscribe-section-injected";
-    sub.innerHTML = '<h2>Get Weekly English Writing Tips</h2><p>Join English learners who improve their writing with free tips, tools, and resources delivered to your inbox every week.</p><div class="ml-embedded" data-form="REPLACE_WITH_FORM_ID"></div><p class="subscribe-small">No spam. Unsubscribe anytime.</p>';
+    sub.innerHTML = '<h2>Get Weekly English Writing Tips</h2><p>Join English learners who improve their writing with free tips, tools, and resources delivered to your inbox every week.</p><div class="ml-embedded" data-form="IPfNga"></div><p class="subscribe-small">No spam. Unsubscribe anytime.</p>';
     footer.parentNode.insertBefore(sub, footer);
   }
 });
