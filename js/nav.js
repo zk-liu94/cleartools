@@ -8,6 +8,7 @@
   { href: "/text-diff-checker.html", label: "Text Diff" },
   { href: "/random-paragraph-generator.html", label: "Paragraphs" },
   { href: "/grammar-checker.html", label: "Grammar" },
+  { href: "/wordle.html", label: "Word Quest" },
 ];
 document.addEventListener("DOMContentLoaded", function() {
   var ph = document.getElementById("nav-placeholder");

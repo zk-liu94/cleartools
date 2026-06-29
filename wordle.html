@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Quest — Free Word Game for English Learners</title>
+  <meta name="description" content="Play Word Quest, an endless word guessing game for English learners. Build vocabulary, earn points, track streaks. Unlimited word puzzles.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cleartools.616699266.workers.dev/wordle.html">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/nav.js"></script>
+  <script defer src="/js/wordle.js"></script>
+</head>
+<body onload="wordleInit()">
+  <div id="nav-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="container wq-page">
+      <div class="wq-header">
+        <h1>Word Quest</h1>
+        <p>Guess the 5-letter word. Earn points. Build your streak. Endless vocabulary fun.</p>
+      </div>
+
+      <!-- Stats Dashboard -->
+      <div class="wq-stats">
+        <div class="wq-stat wq-stat-blue">
+          <div class="wq-stat-icon">&#9733;</div>
+          <div class="wq-stat-val" id="wl-score-display">0</div>
+          <div class="wq-stat-label">Score</div>
+        </div>
+        <div class="wq-stat wq-stat-green">
+          <div class="wq-stat-icon">&#9889;</div>
+          <div class="wq-stat-val" id="wl-streak-display">0</div>
+          <div class="wq-stat-label">Streak</div>
+        </div>
+        <div class="wq-stat wq-stat-amber">
+          <div class="wq-stat-icon">&#127942;</div>
+          <div class="wq-stat-val" id="wl-beststreak-display">0</div>
+          <div class="wq-stat-label">Best</div>
+        </div>
+        <div class="wq-stat wq-stat-silver">
+          <div class="wq-stat-icon">&#127922;</div>
+          <div class="wq-stat-val" id="wl-games-display">0</div>
+          <div class="wq-stat-label">Games</div>
+        </div>
+        <div class="wq-stat wq-stat-purple">
+          <div class="wq-stat-icon">&#9989;</div>
+          <div class="wq-stat-val" id="wl-winrate-display">0%</div>
+          <div class="wq-stat-label">Win&nbsp;Rate</div>
+        </div>
+      </div>
+
+      <!-- Game Area -->
+      <div class="wq-game">
+        <div class="wq-word-num" id="wl-level-display">Word #1</div>
+        <div id="wl-message" class="wq-message"></div>
+        <div id="wl-board" class="wq-board"></div>
+        <div class="wq-actions">
+          <button class="btn btn-primary wq-next-btn" id="wl-next-btn" onclick="wordleNextWord()">Next Word &rarr;</button>
+        </div>
+        <div id="wl-keyboard" class="wq-kb"></div>
+      </div>
+
+      <!-- Legend & Rules -->
+      <div class="wq-legend">
+        <div class="wq-legend-item"><div class="wq-legend-swatch" style="background:#6aaa64"></div><span class="wq-legend-text">Correct</span></div>
+        <div class="wq-legend-item"><div class="wq-legend-swatch" style="background:#c9b458"></div><span class="wq-legend-text">Wrong position</span></div>
+        <div class="wq-legend-item"><div class="wq-legend-swatch" style="background:#787c7e"></div><span class="wq-legend-text">Not in word</span></div>
+      </div>
+
+      <div class="wq-rules">
+        <h2>How to Play</h2>
+        <p>Guess the 5-letter English word in <strong>6 tries</strong>. After each guess, tile colors show how close you are.</p>
+        <p><strong>Scoring:</strong> 1st try = 50pts &middot; 2nd = 40pts &middot; 3rd = 30pts &middot; 4th = 20pts &middot; 5th = 10pts &middot; 6th = 5pts</p>
+        <p>Click <strong>Reset Stats</strong> to clear your progress. Your stats are saved automatically in your browser.</p>
+      </div>
+
+      <div style="text-align:center;margin-top:1rem">
+        <button class="btn btn-outline btn-sm" onclick="wordleResetStats()">Reset Stats</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="container"><p>ClearWrite Tools — Free English writing tools for learners.</p></div></footer>
+</body>
+</html>
