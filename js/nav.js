@@ -7,17 +7,33 @@ function mlSubscribe(event, formId) {
   var form = document.getElementById(formId);
   var email = form.querySelector('input[name="email"]').value;
   var successEl = document.getElementById('ml-success-' + formId.replace('ml-form-', ''));
-  if (typeof ml !== 'undefined') {
-    ml('subscribe', { email: email, form: 'IPfNga' });
+  var btn = form.querySelector('button');
+  btn.disabled = true;
+  btn.textContent = 'Subscribing...';
+
+  // Use sendBeacon for reliable cross-origin submission
+  var data = new FormData();
+  data.append('email', email);
+  data.append('ml_submit', '1');
+
+  var sent = navigator.sendBeacon('https://assets.mailerlite.com/jsonp/2477552/forms/IPfNga/subscribe', data);
+
+  if (sent) {
+    form.style.display = 'none';
+    if (successEl) successEl.style.display = 'block';
   } else {
-    // Fallback: direct POST
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://assets.mailerlite.com/jsonp/2477552/forms/IPfNga/subscribe');
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({ email: email }));
+    // Fallback: regular form submit to blank target (opens new tab briefly)
+    form.method = 'POST';
+    form.action = 'https://assets.mailerlite.com/jsonp/2477552/forms/IPfNga/subscribe';
+    form.target = '_blank';
+    form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: 'email', value: email}));
+    form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: 'ml_submit', value: '1'}));
+    var emailInput = form.querySelector('input[type="email"]');
+    if (emailInput) emailInput.name = '';
+    form.style.display = 'none';
+    if (successEl) successEl.style.display = 'block';
+    form.submit();
   }
-  form.style.display = 'none';
-  if (successEl) successEl.style.display = 'block';
   return false;
 }
 
