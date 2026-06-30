@@ -1,6 +1,9 @@
 ﻿// MailerLite Universal
 (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account', '2477552');
 
+// Impact.com site verification
+(function(){var m=document.createElement('meta');m.name='impact-site-verification';m.content='434f2999-e788-4ddb-960d-a955828772f1';document.head.appendChild(m);})();
+
 var NAV_PAGES = [
   { href: "/", label: "Home" },
   { href: "/word-counter.html", label: "Word Counter" },
