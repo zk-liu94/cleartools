@@ -11,29 +11,20 @@ function mlSubscribe(event, formId) {
   btn.disabled = true;
   btn.textContent = 'Subscribing...';
 
-  // Use sendBeacon for reliable cross-origin submission
-  var data = new FormData();
-  data.append('email', email);
-  data.append('ml_submit', '1');
+  // JSONP approach: create a script tag to avoid CORS issues entirely
+  window.mlCallback = function(data) {
+    // Callback from MailerLite - ignore result, just show success
+  };
 
-  var sent = navigator.sendBeacon('https://assets.mailerlite.com/jsonp/2477552/forms/IPfNga/subscribe', data);
+  var script = document.createElement('script');
+  script.src = 'https://assets.mailerlite.com/jsonp/2477552/forms/IPfNga/subscribe?email=' + encodeURIComponent(email) + '&callback=mlCallback';
+  script.onload = function() { document.body.removeChild(script); };
+  script.onerror = function() { document.body.removeChild(script); };
+  document.body.appendChild(script);
 
-  if (sent) {
-    form.style.display = 'none';
-    if (successEl) successEl.style.display = 'block';
-  } else {
-    // Fallback: regular form submit to blank target (opens new tab briefly)
-    form.method = 'POST';
-    form.action = 'https://assets.mailerlite.com/jsonp/2477552/forms/IPfNga/subscribe';
-    form.target = '_blank';
-    form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: 'email', value: email}));
-    form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: 'ml_submit', value: '1'}));
-    var emailInput = form.querySelector('input[type="email"]');
-    if (emailInput) emailInput.name = '';
-    form.style.display = 'none';
-    if (successEl) successEl.style.display = 'block';
-    form.submit();
-  }
+  // Show success immediately - the subscription was submitted
+  form.style.display = 'none';
+  if (successEl) successEl.style.display = 'block';
   return false;
 }
 
