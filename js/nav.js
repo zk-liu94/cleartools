@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var sub = document.createElement("section");
     sub.className = "subscribe-section";
     sub.id = "subscribe-section-injected";
-    sub.innerHTML = '<h2>Get Weekly English Writing Tips</h2><p>Join English learners who improve their writing with free tips, tools, and resources delivered to your inbox every week.</p><button class="btn btn-primary btn-lg ml-onclick-form" onclick="ml(\'show\', \'yqoy61\', true)" style="font-size:1.05rem;padding:.8rem 2rem;border:none;cursor:pointer">Subscribe Free</button><p class="subscribe-small">No spam. Unsubscribe anytime.</p>';
+    sub.innerHTML = '<h2>Get Weekly English Writing Tips</h2><p>Join English learners who improve their writing with free tips, tools, and resources delivered to your inbox every week.</p><a href="https://landing.mailerlite.com/webforms/landing/yqoy61" target="_blank" class="btn btn-primary btn-lg" style="font-size:1.05rem;padding:.8rem 2rem;text-decoration:none;display:inline-block">Subscribe Free</a><p class="subscribe-small">No spam. Unsubscribe anytime.</p>';
     footer.parentNode.insertBefore(sub, footer);
   }
 });
