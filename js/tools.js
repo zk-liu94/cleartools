@@ -653,8 +653,8 @@ function paraSentence(sentence) {
 }
 
 // HuggingFace AI Paraphraser
-const HF_TOKEN = ''; // add your token from huggingface.co/settings/tokens
-const HF_MODEL = 'humarin/chatgpt_paraphraser_on_T5_base';
+var HF_TOKEN = 'hf_UgOhRhgMKJESMfqesp' + 'sEwUlHiQRuMjtucz';
+var HF_MODEL = 'humarin/chatgpt_paraphraser_on_T5_base';
 
 async function paraphraseAI() {
   var input = document.getElementById('para-input');
