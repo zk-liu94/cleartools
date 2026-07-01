@@ -651,3 +651,67 @@ function paraSentence(sentence) {
     return w;
   }).join('');
 }
+
+// HuggingFace AI Paraphraser
+const HF_TOKEN = ''; // add your token from huggingface.co/settings/tokens
+const HF_MODEL = 'humarin/chatgpt_paraphraser_on_T5_base';
+
+async function paraphraseAI() {
+  var input = document.getElementById('para-input');
+  var output = document.getElementById('para-output');
+  var error = document.getElementById('para-error');
+  var stats = document.getElementById('para-stats');
+  var loading = document.getElementById('para-loading');
+  var text = input.value.trim();
+  error.style.display = 'none';
+  if (!text) { error.textContent = 'Please enter some text.'; error.style.display = 'block'; return; }
+  if (text.length < 10) { error.textContent = 'Need at least 10 characters.'; error.style.display = 'block'; return; }
+
+  loading.style.display = 'block';
+  output.textContent = '';
+  stats.textContent = '';
+
+  try {
+    var result = await paraphraseHF(text);
+    loading.style.display = 'none';
+    if (result && result[0] && result[0].generated_text) {
+      output.textContent = result[0].generated_text;
+      stats.innerHTML = '<span>AI paraphrased</span><span>Model: chatgpt_paraphraser_on_T5_base</span>';
+    } else {
+      throw new Error('Unexpected response');
+    }
+  } catch (e) {
+    loading.style.display = 'none';
+    error.textContent = 'AI service unavailable. Try Paraphrase button instead.';
+    error.style.display = 'block';
+  }
+}
+
+async function paraphraseHF(text) {
+  var mode = PARA_MODE;
+  var prefix = mode === 'formal' ? 'Make this text formal: ' : mode === 'creative' ? 'Make this text creative: ' : 'Paraphrase: ';
+  var res = await fetch('https://api-inference.huggingface.co/models/' + HF_MODEL, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + HF_TOKEN, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      inputs: prefix + text,
+      parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7 }
+    })
+  });
+  if (!res.ok) {
+    // Retry once if cold start (model loading)
+    if (res.status === 503) {
+      await new Promise(r => setTimeout(r, 15000));
+      res = await fetch('https://api-inference.huggingface.co/models/' + HF_MODEL, {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + HF_TOKEN, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          inputs: prefix + text,
+          parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7 }
+        })
+      });
+    }
+    if (!res.ok) throw new Error('API error: ' + res.status);
+  }
+  return await res.json();
+}
