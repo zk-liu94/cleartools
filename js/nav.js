@@ -1,6 +1,19 @@
 ﻿// MailerLite Universal
 (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account', '2477552');
 
+// Tool category filter for homepage
+function filterTools(category) {
+  var tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  var activeTab = document.querySelector('.tab-btn[data-tab="' + category + '"]');
+  if (activeTab) activeTab.classList.add('active');
+  var cards = document.querySelectorAll('.tool-card');
+  cards.forEach(function(c) {
+    if (category === 'all') { c.style.display = ''; }
+    else { c.style.display = c.getAttribute('data-category') === category ? '' : 'none'; }
+  });
+}
+
 var NAV_PAGES = [
   { href: "/", label: "Home" },
   { href: "/word-counter.html", label: "Word Counter" },
@@ -11,6 +24,7 @@ var NAV_PAGES = [
   { href: "/text-diff-checker.html", label: "Text Diff" },
   { href: "/random-paragraph-generator.html", label: "Paragraphs" },
   { href: "/grammar-checker.html", label: "Grammar" },
+  { href: "/paraphrasing-tool.html", label: "Paraphrase" },
   { href: "/wordle.html", label: "Word Quest" },
 ];
 document.addEventListener("DOMContentLoaded", function() {

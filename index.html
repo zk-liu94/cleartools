@@ -38,58 +38,70 @@
   </section>
 
   <main class="container">
+    <!-- Tool Tabs -->
+    <div class="tool-tabs">
+      <button class="tab-btn active" onclick="filterTools('all')" data-tab="all">All</button>
+      <button class="tab-btn" onclick="filterTools('writing')" data-tab="writing">Writing</button>
+      <button class="tab-btn" onclick="filterTools('analysis')" data-tab="analysis">Analysis</button>
+      <button class="tab-btn" onclick="filterTools('fun')" data-tab="fun">Fun</button>
+    </div>
+
     <section class="tool-grid">
-      <article class="tool-card">
+      <article class="tool-card" data-category="writing">
         <div class="tool-card-icon" style="background:var(--primary-light);color:var(--primary)">&#x1F4DD;</div>
         <h2><a href="/word-counter.html">Word Counter</a></h2>
         <p>Count words, characters, sentences, paragraphs, and lines. Get average word length and sentence length instantly as you type.</p>
         <a href="/word-counter.html" class="btn btn-primary btn-sm">Open Tool</a>
       </article>
-      <article class="tool-card">
+      <article class="tool-card" data-category="analysis">
         <div class="tool-card-icon" style="background:var(--accent-light);color:var(--accent)">&#x1F4D6;</div>
         <h2><a href="/readability-checker.html">Readability Checker</a></h2>
         <p>Analyze your text with the Flesch Reading Ease score. Find out how easy your writing is to understand for English learners.</p>
         <a href="/readability-checker.html" class="btn btn-primary btn-sm">Open Tool</a>
       </article>
-          <article class="tool-card">
+      <article class="tool-card" data-category="writing">
         <div class="tool-card-icon" style="background:#fef3c7;color:#d97706">Aa</div>
         <h2><a href="/text-case-converter.html">Text Case Converter</a></h2>
         <p>Convert text between UPPER CASE, lower case, Title Case, and Sentence case. Perfect for learning English formatting rules.</p>
         <a href="/text-case-converter.html" class="btn btn-primary btn-sm">Open Tool</a>
       </article>
-      <article class="tool-card">
+      <article class="tool-card" data-category="analysis">
         <div class="tool-card-icon" style="background:#ede9fe;color:#7c3aed">#</div>
         <h2><a href="/word-frequency.html">Word Frequency Counter</a></h2>
         <p>See which English words you use most often in your writing. Identify overused words and expand your vocabulary.</p>
         <a href="/word-frequency.html" class="btn btn-primary btn-sm">Open Tool</a>
       </article>
-      <article class="tool-card">
+      <article class="tool-card" data-category="analysis">
         <div class="tool-card-icon" style="background:#fce4ec;color:#d81b60">∑</div>
         <h2><a href="/syllable-counter.html">Syllable Counter</a></h2>
         <p>Count syllables in any English text. See syllable counts per word and learn how syllable patterns affect your writing readability.</p>
         <a href="/syllable-counter.html" class="btn btn-primary btn-sm">Open Tool</a>
       </article>
-      <article class="tool-card">
+      <article class="tool-card" data-category="analysis">
         <div class="tool-card-icon" style="background:#f3e8ff;color:#9333ea">&lt;&gt;</div>
         <h2><a href="/text-diff-checker.html">Text Diff Checker</a></h2>
         <p>Compare two versions of your text side by side. See exactly what changed with highlighted additions and removals.</p>
         <a href="/text-diff-checker.html" class="btn btn-primary btn-sm">Open Tool</a>
       </article>
-      <article class="tool-card">
+      <article class="tool-card" data-category="analysis">
         <div class="tool-card-icon" style="background:#e0f2fe;color:#0369a1">G</div>
         <h2><a href="/grammar-checker.html">Grammar Checker</a></h2>
         <p>Check your English text for common grammar issues. Catches subject-verb errors, article mistakes, double negatives, and more.</p>
         <a href="/grammar-checker.html" class="btn btn-primary btn-sm">Open Tool</a>
       </article>
-      <article class="tool-card">
+      <article class="tool-card" data-category="writing">
         <div class="tool-card-icon" style="background:#f0fdf4;color:#16a34a">W</div>
+        <h2><a href="/paraphrasing-tool.html">Paraphrasing Tool</a></h2>
+        <p>Rewrite English sentences in standard, formal, or creative mode. Improve your vocabulary and avoid repetition in your writing.</p>
+        <a href="/paraphrasing-tool.html" class="btn btn-primary btn-sm">Open Tool</a>
+      </article>
+      <article class="tool-card" data-category="fun">
+        <div class="tool-card-icon" style="background:#f0fdf4;color:#059669">W</div>
         <h2><a href="/wordle.html">Word Quest</a></h2>
         <p>Guess the 5-letter English word in 6 tries. A fun vocabulary game for English learners that helps build word recognition skills.</p>
         <a href="/wordle.html" class="btn btn-primary btn-sm">Play Game</a>
       </article>
-
-
-      <article class="tool-card">
+      <article class="tool-card" data-category="writing">
         <div class="tool-card-icon" style="background:#fef9c3;color:#a16207">¶</div>
         <h2><a href="/random-paragraph-generator.html">Random Paragraph Generator</a></h2>
         <p>Generate random English paragraphs for reading practice, typing exercises, or as placeholder text for your projects.</p>

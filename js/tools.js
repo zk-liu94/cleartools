@@ -451,3 +451,148 @@ if (grammarBtn) {
     out.innerHTML = html;
   });
 }
+
+// ============================================
+// Paraphrasing Tool
+// ============================================
+
+var PARA_MODE = 'standard';
+
+var PARA_SYNONYMS = {
+  "good": ["great", "excellent", "fine", "positive", "beneficial", "valuable"],
+  "bad": ["poor", "negative", "unfavorable", "harmful", "damaging", "inferior"],
+  "big": ["large", "huge", "enormous", "massive", "significant", "substantial"],
+  "small": ["tiny", "minor", "compact", "modest", "limited", "minimal"],
+  "important": ["significant", "crucial", "essential", "vital", "key", "critical"],
+  "use": ["utilize", "employ", "apply", "leverage", "harness", "make use of"],
+  "get": ["obtain", "acquire", "receive", "gain", "secure", "attain"],
+  "help": ["assist", "aid", "support", "facilitate", "enable"],
+  "show": ["demonstrate", "indicate", "reveal", "illustrate", "display", "exhibit"],
+  "make": ["create", "produce", "generate", "construct", "build", "form"],
+  "change": ["modify", "alter", "adjust", "transform", "revise", "convert"],
+  "think": ["believe", "consider", "deem", "regard", "suppose", "reckon"],
+  "start": ["begin", "commence", "initiate", "launch", "embark on"],
+  "end": ["finish", "conclude", "complete", "terminate", "cease", "halt"],
+  "try": ["attempt", "endeavor", "strive", "seek", "undertake"],
+  "give": ["provide", "offer", "supply", "furnish", "present"],
+  "keep": ["maintain", "retain", "preserve", "sustain", "continue"],
+  "find": ["discover", "locate", "identify", "uncover", "detect"],
+  "say": ["state", "declare", "express", "mention", "remark", "note"],
+  "ask": ["inquire", "question", "request", "seek", "query"],
+  "tell": ["inform", "notify", "advise", "brief", "apprise"],
+  "easy": ["simple", "straightforward", "effortless", "uncomplicated"],
+  "hard": ["difficult", "challenging", "demanding", "tough", "arduous"],
+  "new": ["fresh", "novel", "modern", "contemporary", "recent", "innovative"],
+  "old": ["ancient", "aged", "former", "antique", "outdated", "vintage"],
+  "happy": ["pleased", "delighted", "content", "satisfied", "cheerful", "joyful"],
+  "true": ["accurate", "correct", "precise", "genuine", "valid", "authentic"],
+  "wrong": ["incorrect", "mistaken", "inaccurate", "erroneous", "flawed"],
+  "clear": ["obvious", "evident", "apparent", "transparent", "unambiguous"],
+  "many": ["numerous", "countless", "abundant", "plentiful", "substantial"],
+  "strong": ["powerful", "robust", "sturdy", "solid", "durable", "formidable"],
+  "choose": ["select", "pick", "opt for", "decide on", "settle on"],
+  "build": ["construct", "assemble", "erect", "establish", "develop"],
+  "come": ["arrive", "approach", "appear", "emerge", "show up"],
+  "look": ["observe", "examine", "inspect", "scan", "survey", "study"],
+  "see": ["perceive", "witness", "spot", "notice", "discern", "view"],
+  "learn": ["study", "master", "grasp", "comprehend", "understand"],
+  "want": ["desire", "wish", "seek", "aspire", "long for"]
+};
+
+var PARA_FORMAL = {
+  "help": ["assist", "facilitate", "be of assistance"],
+  "use": ["utilize", "employ", "make use of"],
+  "start": ["commence", "initiate", "embark upon"],
+  "end": ["terminate", "conclude", "cease"],
+  "get": ["obtain", "receive", "procure"],
+  "give": ["provide", "furnish", "supply"],
+  "make": ["manufacture", "produce", "fabricate"],
+  "show": ["demonstrate", "evidence", "substantiate"],
+  "tell": ["inform", "notify", "apprise"],
+  "need": ["require", "necessitate"],
+  "try": ["endeavor", "attempt"],
+  "improve": ["enhance", "ameliorate", "optimize"],
+  "before": ["prior to", "preceding"],
+  "after": ["subsequent to", "following"],
+  "first": ["primary", "initial", "foremost"],
+  "next": ["subsequent", "following", "ensuing"],
+  "because": ["due to the fact that", "owing to", "on account of"]
+};
+
+var PARA_CREATIVE = {
+  "beautiful": ["breathtaking", "stunning", "gorgeous", "magnificent"],
+  "interesting": ["captivating", "engrossing", "intriguing", "compelling"],
+  "good": ["outstanding", "splendid", "marvelous", "superb"],
+  "bad": ["dreadful", "appalling", "atrocious", "abysmal"],
+  "help": ["empower", "uplift", "bolster", "fortify"],
+  "big": ["tremendous", "immense", "colossal", "monumental"],
+  "fast": ["lightning-fast", "blistering", "whirlwind"],
+  "new": ["groundbreaking", "revolutionary", "cutting-edge"],
+  "change": ["metamorphose", "transfigure", "reimagine"],
+  "look": ["gaze", "glance", "peer", "scrutinize"]
+};
+
+function setParaMode(mode) {
+  PARA_MODE = mode;
+  document.querySelectorAll('.para-mode-btn').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-mode') === mode);
+  });
+}
+
+function clearParaphrase() {
+  document.getElementById('para-input').value = '';
+  document.getElementById('para-output').textContent = '';
+  document.getElementById('para-error').style.display = 'none';
+  document.getElementById('para-stats').textContent = '';
+}
+
+function paraphraseText() {
+  var input = document.getElementById('para-input');
+  var output = document.getElementById('para-output');
+  var error = document.getElementById('para-error');
+  var stats = document.getElementById('para-stats');
+  var text = input.value.trim();
+  error.style.display = 'none';
+
+  if (!text) {
+    error.textContent = 'Please enter some text to paraphrase.';
+    error.style.display = 'block';
+    return;
+  }
+  if (text.length < 10) {
+    error.textContent = 'Please enter at least 10 characters.';
+    error.style.display = 'block';
+    return;
+  }
+
+  var sentences = text.match(/[^.!?\n]+[.!?\n]*/g) || [text];
+  var paraphrased = sentences.map(function(s) { return paraphraseSentence(s.trim()); }).join(' ');
+  var originalWords = text.split(/\s+/).length;
+  var newWords = paraphrased.split(/\s+/).length;
+
+  output.textContent = paraphrased;
+  stats.innerHTML = '<span>Original: ' + originalWords + ' words</span><span>Paraphrased: ' + newWords + ' words</span>';
+}
+
+function paraphraseSentence(sentence) {
+  if (!sentence) return '';
+  var words = sentence.split(/(\s+|[.,!?;:'"])/);
+  var synDict = PARA_MODE === 'formal' ? Object.assign({}, PARA_SYNONYMS, PARA_FORMAL)
+    : PARA_MODE === 'creative' ? Object.assign({}, PARA_SYNONYMS, PARA_CREATIVE)
+    : PARA_SYNONYMS;
+
+  return words.map(function(w) {
+    var clean = w.toLowerCase().replace(/[^a-z]/g, '');
+    if (clean.length < 3) return w;
+    var syns = synDict[clean];
+    if (syns && syns.length > 0 && Math.random() > 0.4) {
+      var chosen = syns[Math.floor(Math.random() * syns.length)];
+      if (w[0] === w[0].toUpperCase() && w.length > 1) {
+        chosen = chosen.charAt(0).toUpperCase() + chosen.slice(1);
+      }
+      var punct = w.replace(/[a-zA-Z]/g, '');
+      return chosen + punct;
+    }
+    return w;
+  }).join('');
+}

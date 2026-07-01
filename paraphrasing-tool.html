@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paraphrasing Tool — Rewrite Sentences Free | ClearWrite Tools</title>
+  <meta name="description" content="Free paraphrasing tool for English learners. Rewrite sentences, improve vocabulary, and avoid plagiarism. Choose from standard, formal, or creative modes.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://clearwritetools.com/paraphrasing-tool.html">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/nav.js"></script>
+  <script defer src="/js/tools.js"></script>
+  <meta property="og:title" content="Paraphrasing Tool — Free English Learning Tool">
+  <meta property="og:description" content="Rewrite English sentences with our free paraphrasing tool. Three modes: standard, formal, creative.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Paraphrasing Tool",
+    "applicationCategory": "Writer",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    .para-container { max-width: 720px; margin: 0 auto; }
+    .para-input-area { margin-bottom: 1rem; }
+    .para-input-area textarea { width: 100%; min-height: 160px; padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); font-size: .95rem; line-height: 1.6; resize: vertical; font-family: inherit; }
+    .para-input-area textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+    .para-controls { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.5rem; }
+    .para-mode { display: flex; gap: .35rem; background: var(--gray-100); border-radius: 100px; padding: 3px; }
+    .para-mode-btn { padding: .4rem .9rem; border: none; background: transparent; border-radius: 100px; font-size: .8rem; font-weight: 500; color: var(--gray-600); cursor: pointer; transition: all .2s; }
+    .para-mode-btn:hover { color: var(--gray-900); }
+    .para-mode-btn.active { background: var(--white); color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .para-output { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.25rem; min-height: 120px; line-height: 1.7; font-size: .95rem; white-space: pre-wrap; }
+    .para-output:empty::before { content: "Your paraphrased text will appear here..."; color: var(--gray-400); }
+    .para-stats { display: flex; gap: 1.5rem; margin-top: .75rem; font-size: .8rem; color: var(--gray-500); }
+    .para-stats span { display: flex; align-items: center; gap: .3rem; }
+    .para-error { color: var(--danger, #dc2626); font-size: .85rem; margin-top: .5rem; display: none; }
+    @media (max-width:480px) {
+      .para-controls { flex-direction: column; align-items: stretch; }
+      .para-mode { border-radius: 8px; justify-content: stretch; }
+      .para-mode-btn { flex: 1; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <h1>Paraphrasing Tool</h1>
+        <p>Rewrite English sentences to improve clarity, expand vocabulary, and avoid repetition. Choose your style.</p>
+      </div>
+
+      <div class="para-container">
+        <!-- Input -->
+        <div class="para-input-area">
+          <textarea id="para-input" placeholder="Paste or type your text here to paraphrase..."></textarea>
+        </div>
+
+        <!-- Controls -->
+        <div class="para-controls">
+          <div class="para-mode">
+            <button class="para-mode-btn active" onclick="setParaMode('standard')" data-mode="standard">Standard</button>
+            <button class="para-mode-btn" onclick="setParaMode('formal')" data-mode="formal">Formal</button>
+            <button class="para-mode-btn" onclick="setParaMode('creative')" data-mode="creative">Creative</button>
+          </div>
+          <button class="btn btn-primary" onclick="paraphraseText()">Paraphrase</button>
+          <button class="btn btn-outline" onclick="clearParaphrase()">Clear</button>
+        </div>
+
+        <!-- Output -->
+        <div class="para-output" id="para-output"></div>
+        <div class="para-error" id="para-error"></div>
+        <div class="para-stats" id="para-stats"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="container"><p>ClearWrite Tools — Free English writing tools for learners.</p></div></footer>
+</body>
+</html>
