@@ -456,135 +456,77 @@ if (grammarBtn) {
 // Paraphrasing Tool
 // ============================================
 
+// ============================================
+// Paraphrasing Tool - v2
+// ============================================
+
 var PARA_MODE = 'standard';
 
+var PARA_PHRASES = {
+  "a lot of": ["many", "numerous", "a great deal of", "countless"],
+  "in my opinion": ["from my perspective", "as I see it", "in my view"],
+  "on the other hand": ["conversely", "alternatively", "in contrast"],
+  "in addition": ["furthermore", "moreover", "additionally"],
+  "as a result": ["consequently", "therefore", "thus"],
+  "for example": ["for instance", "as an illustration"],
+  "look at": ["examine", "observe", "consider"],
+  "make sure": ["ensure", "guarantee", "confirm"],
+  "even though": ["although", "though", "despite the fact that"]
+};
+
 var PARA_SYNONYMS = {
-  "good": ["great", "excellent", "fine", "positive", "beneficial", "valuable"],
-  "bad": ["poor", "negative", "unfavorable", "harmful", "damaging", "inferior"],
-  "big": ["large", "huge", "enormous", "massive", "significant", "substantial"],
-  "small": ["tiny", "minor", "compact", "modest", "limited", "minimal"],
-  "important": ["significant", "crucial", "essential", "vital", "key", "critical"],
-  "use": ["utilize", "employ", "apply", "leverage", "harness"],
-  "get": ["obtain", "acquire", "receive", "gain", "secure", "attain"],
-  "help": ["assist", "aid", "support", "facilitate", "enable"],
-  "show": ["demonstrate", "indicate", "reveal", "illustrate", "display", "exhibit"],
-  "make": ["create", "produce", "generate", "construct", "build", "form"],
-  "change": ["modify", "alter", "adjust", "transform", "revise", "convert"],
-  "think": ["believe", "consider", "deem", "regard", "suppose", "reckon"],
-  "start": ["begin", "commence", "initiate", "launch", "embark on"],
-  "end": ["finish", "conclude", "complete", "terminate", "cease", "halt"],
-  "try": ["attempt", "endeavor", "strive", "seek", "undertake"],
-  "give": ["provide", "offer", "supply", "furnish", "present"],
-  "keep": ["maintain", "retain", "preserve", "sustain", "continue"],
-  "find": ["discover", "locate", "identify", "uncover", "detect"],
-  "say": ["state", "declare", "express", "mention", "remark", "note"],
-  "ask": ["inquire", "question", "request", "seek", "query"],
-  "tell": ["inform", "notify", "advise", "brief", "apprise"],
-  "easy": ["simple", "straightforward", "effortless", "uncomplicated"],
-  "hard": ["difficult", "challenging", "demanding", "tough", "arduous"],
-  "new": ["fresh", "novel", "modern", "contemporary", "recent", "innovative"],
-  "old": ["ancient", "aged", "former", "antique", "outdated", "vintage"],
-  "happy": ["pleased", "delighted", "content", "satisfied", "cheerful", "joyful"],
-  "true": ["accurate", "correct", "precise", "genuine", "valid", "authentic"],
-  "wrong": ["incorrect", "mistaken", "inaccurate", "erroneous", "flawed"],
-  "clear": ["obvious", "evident", "apparent", "transparent", "unambiguous"],
-  "many": ["numerous", "countless", "abundant", "plentiful", "substantial"],
-  "strong": ["powerful", "robust", "sturdy", "solid", "durable", "formidable"],
-  "choose": ["select", "pick", "opt for", "decide on", "settle on"],
-  "build": ["construct", "assemble", "erect", "establish", "develop"],
-  "come": ["arrive", "approach", "appear", "emerge", "show up"],
-  "look": ["observe", "examine", "inspect", "scan", "survey", "study"],
-  "see": ["perceive", "witness", "spot", "notice", "discern", "view"],
-  "learn": ["study", "master", "grasp", "comprehend", "understand"],
-  "want": ["desire", "wish", "seek", "aspire", "long for"],
-  "need": ["require", "demand", "necessitate", "call for"],
-  "take": ["grasp", "seize", "capture", "acquire", "obtain"],
-  "way": ["method", "approach", "technique", "means", "manner"],
-  "part": ["portion", "segment", "component", "element", "section"],
-  "like": ["similar to", "akin to", "comparable to", "resembling"],
-  "very": ["extremely", "remarkably", "exceptionally", "highly"],
-  "always": ["consistently", "invariably", "continually", "perpetually"],
-  "often": ["frequently", "regularly", "commonly", "habitually"],
-  "maybe": ["perhaps", "possibly", "potentially", "conceivably"],
-  "only": ["solely", "merely", "simply", "exclusively"],
-  "really": ["truly", "genuinely", "indeed", "certainly"],
-  "also": ["additionally", "furthermore", "moreover", "likewise"],
-  "because": ["since", "as", "due to", "owing to", "on account of"],
-  "so": ["therefore", "thus", "consequently", "hence", "accordingly"],
-  "but": ["however", "nevertheless", "nonetheless", "yet", "still"],
-  "and": ["as well as", "along with", "in addition to"],
-  "then": ["afterward", "subsequently", "thereafter", "next"],
-  "now": ["currently", "presently", "at present", "nowadays"],
-  "first": ["firstly", "to begin with", "initially", "in the first place"],
-  "finally": ["ultimately", "eventually", "in conclusion", "lastly"],
-  "for example": ["for instance", "as an example", "to illustrate"],
-  "a lot": ["a great deal", "considerably", "extensively", "immensely"],
-  "better": ["superior", "improved", "enhanced", "higher-quality"],
-  "worse": ["inferior", "poorer", "lesser", "substandard"],
-  "fast": ["quick", "rapid", "swift", "speedy", "brisk"],
-  "slow": ["gradual", "leisurely", "unhurried", "sluggish"],
-  "right": ["correct", "proper", "appropriate", "suitable"],
-  "wrong": ["incorrect", "mistaken", "inaccurate", "erroneous"],
-  "nice": ["pleasant", "agreeable", "delightful", "enjoyable"],
-  "helpful": ["useful", "beneficial", "valuable", "advantageous"],
-  "different": ["distinct", "various", "diverse", "contrasting", "dissimilar"],
-  "simple": ["basic", "fundamental", "plain", "modest", "elementary"],
-  "special": ["unique", "distinctive", "notable", "remarkable", "unusual"],
-  "certain": ["particular", "specific", "definite", "sure"],
-  "main": ["primary", "chief", "principal", "leading", "foremost"],
-  "best": ["finest", "optimal", "premier", "ultimate", "top"],
-  "many": ["numerous", "countless", "abundant", "plentiful", "substantial"],
-  "some": ["several", "various", "a number of", "a handful of"],
-  "most": ["the majority of", "nearly all", "virtually all", "predominantly"],
-  "other": ["additional", "further", "alternative", "different"],
-  "same": ["identical", "equivalent", "comparable", "matching", "alike"],
-  "each": ["every", "each and every", "all"],
-  "thing": ["item", "object", "element", "aspect", "factor"],
-  "person": ["individual", "someone", "somebody", "human being"],
-  "people": ["individuals", "folks", "the public", "society"],
-  "student": ["learner", "pupil", "scholar", "trainee"],
-  "teacher": ["instructor", "educator", "tutor", "mentor", "trainer"],
-  "writing": ["composition", "text", "content", "prose", "copy"],
-  "tool": ["instrument", "resource", "utility", "application"],
-  "word": ["term", "expression", "vocabulary item", "lexical unit"],
-  "sentence": ["statement", "phrase", "clause", "expression"],
-  "meaning": ["significance", "sense", "definition", "implication", "connotation"],
-  "example": ["illustration", "instance", "sample", "demonstration", "case"],
-  "idea": ["concept", "notion", "thought", "perspective", "viewpoint"],
-  "way": ["method", "approach", "technique", "means", "manner"],
-  "time": ["duration", "period", "span", "interval", "length"],
-  "work": ["labor", "effort", "endeavor", "toil", "exertion"],
-  "life": ["existence", "living", "lifetime", "way of life"],
-  "day": ["daytime", "24-hour period", "time"],
-  "year": ["annual period", "twelve months", "calendar year"],
-  "place": ["location", "site", "area", "spot", "region"],
-  "world": ["earth", "globe", "planet", "society", "international community"],
-  "book": ["volume", "publication", "textbook", "guide", "manual"],
-  "language": ["tongue", "speech", "dialect", "vernacular", "communication"],
-  "english": ["the English language", "English", "the language"],
-  "grammar": ["syntax", "usage", "linguistic rules", "sentence structure"],
-  "vocabulary": ["lexicon", "word stock", "terminology", "lexis"],
-  "write": ["compose", "draft", "pen", "author", "put in writing"],
-  "read": ["peruse", "study", "examine", "look through", "browse"],
-  "speak": ["talk", "converse", "communicate", "verbalize", "express"],
-  "understand": ["comprehend", "grasp", "fathom", "follow", "make sense of"],
-  "improve": ["enhance", "boost", "upgrade", "refine", "polish", "perfect"],
-  "practice": ["drill", "rehearse", "train", "exercise", "work on"],
-  "explain": ["clarify", "elucidate", "expound", "illustrate", "spell out"],
-  "describe": ["portray", "depict", "characterize", "outline", "detail"],
-  "focus": ["concentrate", "center", "zero in on", "home in on"],
-  "achieve": ["accomplish", "attain", "reach", "realize", "pull off"],
-  "create": ["produce", "generate", "originate", "devise", "formulate"],
-  "develop": ["cultivate", "foster", "evolve", "advance", "progress"],
-  "prepare": ["get ready", "make ready", "organize", "arrange", "set up"],
-  "benefit": ["advantage", "gain", "profit", "reward", "upside"],
-  "problem": ["issue", "difficulty", "challenge", "predicament", "dilemma"],
-  "result": ["outcome", "consequence", "effect", "aftermath", "product"],
-  "skill": ["ability", "capability", "competence", "proficiency", "expertise"],
-  "knowledge": ["understanding", "awareness", "familiarity", "grasp", "insight"],
-  "lesson": ["class", "session", "tutorial", "lecture", "seminar"],
-  "exercise": ["activity", "task", "drill", "practice", "assignment"],
-  "test": ["exam", "assessment", "evaluation", "quiz", "examination"]
+  "good": ["great", "excellent", "fine", "beneficial", "valuable"],
+  "bad": ["poor", "negative", "harmful", "damaging"],
+  "big": ["large", "huge", "enormous", "massive", "substantial"],
+  "small": ["tiny", "minor", "compact", "modest", "limited"],
+  "important": ["significant", "crucial", "essential", "vital", "critical"],
+  "use": ["utilize", "employ", "apply", "leverage"],
+  "help": ["assist", "aid", "support", "facilitate"],
+  "show": ["demonstrate", "indicate", "reveal", "illustrate"],
+  "make": ["create", "produce", "generate", "construct"],
+  "change": ["modify", "alter", "adjust", "transform"],
+  "think": ["believe", "consider", "regard", "suppose"],
+  "start": ["begin", "commence", "initiate", "launch"],
+  "end": ["finish", "conclude", "complete", "cease"],
+  "try": ["attempt", "strive", "seek", "undertake"],
+  "give": ["provide", "offer", "supply", "present"],
+  "find": ["discover", "locate", "identify", "uncover"],
+  "say": ["state", "declare", "express", "mention"],
+  "ask": ["inquire", "request", "query"],
+  "tell": ["inform", "notify", "advise"],
+  "easy": ["simple", "straightforward", "effortless"],
+  "hard": ["difficult", "challenging", "demanding", "tough"],
+  "new": ["fresh", "novel", "modern", "recent", "innovative"],
+  "happy": ["pleased", "delighted", "content", "cheerful"],
+  "true": ["accurate", "correct", "precise", "genuine"],
+  "clear": ["obvious", "evident", "apparent", "transparent"],
+  "many": ["numerous", "countless", "abundant", "plentiful"],
+  "choose": ["select", "pick out", "opt for", "decide on"],
+  "learn": ["study", "master", "grasp", "comprehend"],
+  "understand": ["comprehend", "grasp", "fathom", "follow"],
+  "improve": ["enhance", "boost", "upgrade", "refine", "polish"],
+  "explain": ["clarify", "elucidate", "expound", "illustrate"],
+  "focus": ["concentrate", "center on", "zero in on"],
+  "create": ["produce", "generate", "originate", "devise"],
+  "need": ["require", "demand", "necessitate"],
+  "way": ["method", "approach", "technique", "means"],
+  "very": ["extremely", "remarkably", "exceptionally"],
+  "also": ["additionally", "furthermore", "moreover"],
+  "because": ["since", "as", "due to", "owing to"],
+  "so": ["therefore", "thus", "consequently"],
+  "but": ["however", "nevertheless", "nonetheless"],
+  "better": ["superior", "improved", "enhanced"],
+  "simple": ["basic", "straightforward", "plain"],
+  "best": ["finest", "optimal", "premier"],
+  "student": ["learner", "pupil", "scholar"],
+  "writing": ["composition", "text", "content", "prose"],
+  "example": ["illustration", "instance", "sample"],
+  "idea": ["concept", "notion", "thought", "viewpoint"],
+  "grammar": ["syntax", "usage", "sentence structure"],
+  "write": ["compose", "draft", "author"],
+  "skill": ["ability", "capability", "competence", "proficiency"],
+  "knowledge": ["understanding", "awareness", "familiarity"],
+  "goal": ["objective", "aim", "target", "aspiration"]
 };
 
 var PARA_FORMAL = {
@@ -595,56 +537,63 @@ var PARA_FORMAL = {
   "get": ["obtain", "receive", "procure"],
   "give": ["provide", "furnish", "supply"],
   "make": ["manufacture", "produce", "fabricate"],
-  "show": ["demonstrate", "evidence", "substantiate"],
   "tell": ["inform", "notify", "apprise"],
-  "need": ["require", "necessitate"],
   "try": ["endeavor", "attempt"],
   "improve": ["enhance", "ameliorate", "optimize"],
-  "buy": ["purchase", "acquire", "procure"],
   "enough": ["sufficient", "adequate", "ample"],
-  "about": ["regarding", "concerning", "with respect to"],
+  "about": ["regarding", "concerning"],
   "before": ["prior to", "preceding"],
   "after": ["subsequent to", "following"],
-  "because": ["due to the fact that", "owing to", "on account of"],
-  "also": ["furthermore", "moreover", "in addition"],
-  "but": ["however", "nevertheless", "notwithstanding"],
-  "so": ["therefore", "consequently", "accordingly"],
-  "then": ["thereafter", "subsequently"],
-  "really": ["truly", "undoubtedly", "unquestionably"],
-  "idea": ["concept", "proposition", "hypothesis"],
-  "thing": ["element", "component", "constituent"],
-  "way": ["method", "methodology", "procedure"],
-  "use": ["utilization", "application", "implementation"],
-  "need": ["requirement", "necessity", "prerequisite"]
+  "but": ["however", "nevertheless"],
+  "so": ["therefore", "consequently"],
+  "need": ["requirement", "necessity"]
 };
 
 var PARA_CREATIVE = {
-  "beautiful": ["breathtaking", "stunning", "gorgeous", "magnificent"],
-  "interesting": ["captivating", "engrossing", "intriguing", "compelling", "fascinating"],
-  "good": ["outstanding", "splendid", "marvelous", "superb", "first-rate"],
-  "bad": ["dreadful", "appalling", "atrocious", "abysmal", "horrendous"],
-  "help": ["empower", "uplift", "bolster", "fortify"],
-  "big": ["tremendous", "immense", "colossal", "monumental", "gargantuan"],
-  "fast": ["lightning-fast", "blistering", "whirlwind", "breakneck"],
-  "new": ["groundbreaking", "revolutionary", "cutting-edge", "state-of-the-art"],
-  "change": ["metamorphose", "transfigure", "reimagine", "revolutionize"],
-  "look": ["gaze", "glance", "peer", "scrutinize", "eyeball"],
-  "old": ["venerable", "time-honored", "bygone", "retro"],
-  "small": ["minuscule", "diminutive", "microscopic", "pocket-sized"],
-  "strong": ["indomitable", "invincible", "unyielding", "ironclad"],
-  "happy": ["overjoyed", "ecstatic", "elated", "on cloud nine"],
-  "hard": ["herculean", "strenuous", "formidable", "back-breaking"],
-  "easy": ["a breeze", "effortless", "painless", "smooth sailing"],
-  "improve": ["supercharge", "turbocharge", "elevate", "transform"],
-  "learn": ["master", "absorb", "immerse yourself in", "get the hang of"],
-  "try": ["give it a shot", "take a crack at", "have a go at"],
-  "write": ["craft", "pen", "dash off", "scribble"],
-  "think": ["ponder", "contemplate", "mull over", "muse"],
-  "walk": ["stroll", "wander", "saunter", "meander"],
-  "talk": ["chat", "chatter", "converse", "shoot the breeze"],
-  "work": ["toil", "grind", "slog", "put in the hours"],
-  "important": ["paramount", "imperative", "non-negotiable", "of the essence"]
+  "good": ["outstanding", "splendid", "marvelous", "superb"],
+  "bad": ["dreadful", "appalling", "atrocious", "abysmal"],
+  "big": ["tremendous", "immense", "colossal", "monumental"],
+  "new": ["groundbreaking", "revolutionary", "cutting-edge"],
+  "happy": ["overjoyed", "ecstatic", "elated"],
+  "hard": ["herculean", "strenuous", "formidable"],
+  "easy": ["a breeze", "effortless", "painless"],
+  "try": ["give it a shot", "have a go at"],
+  "think": ["ponder", "contemplate", "mull over"],
+  "important": ["paramount", "imperative"],
+  "improve": ["supercharge", "turbocharge", "elevate"],
+  "learn": ["master", "get the hang of"],
+  "help": ["empower", "uplift", "bolster"],
+  "strong": ["indomitable", "invincible", "unyielding"],
+  "change": ["metamorphose", "revolutionize"]
 };
+
+function structuralTransforms(text) {
+  var t = [
+    function(s) {
+      return s.replace(/^There (is|are) (a|an|the|some|many) (.+?)(\.|$)/i, function(m, v, d, rest, p) {
+        if (Math.random() > 0.5) return m;
+        var fw = rest.trim().split(/\s+/)[0];
+        return fw.charAt(0).toUpperCase() + fw.slice(1) + rest.trim().substring(fw.length) + ' ' + (v === 'is' ? 'exists' : 'exist') + p;
+      });
+    },
+    function(s) {
+      return s.replace(/^(I think |I believe )(that )?(.+)\.?$/i, function(m, intro, that, rest) {
+        if (Math.random() > 0.5) return m;
+        var ops = ['In my view, ', 'From my perspective, ', 'As I see it, '];
+        return ops[Math.floor(Math.random() * ops.length)] + rest + '.';
+      });
+    },
+    function(s) {
+      return s.replace(/^It is (important|essential|necessary|crucial|vital) to (.+)$/i, function(m, adj, rest) {
+        if (Math.random() > 0.5) return m;
+        var alt = {important:'vital', essential:'key', necessary:'needed', crucial:'critical', vital:'essential'};
+        return 'It is ' + (alt[adj.toLowerCase()] || adj) + ' that one ' + rest;
+      });
+    }
+  ];
+  for (var i = 0; i < t.length; i++) text = t[i](text);
+  return text;
+}
 
 function setParaMode(mode) {
   PARA_MODE = mode;
@@ -667,46 +616,37 @@ function paraphraseText() {
   var stats = document.getElementById('para-stats');
   var text = input.value.trim();
   error.style.display = 'none';
+  if (!text) { error.textContent = 'Please enter some text.'; error.style.display = 'block'; return; }
+  if (text.length < 10) { error.textContent = 'Need at least 10 characters.'; error.style.display = 'block'; return; }
 
-  if (!text) {
-    error.textContent = 'Please enter some text to paraphrase.';
-    error.style.display = 'block';
-    return;
-  }
-  if (text.length < 10) {
-    error.textContent = 'Please enter at least 10 characters.';
-    error.style.display = 'block';
-    return;
-  }
-
+  text = structuralTransforms(text);
   var sentences = text.match(/[^.!?\n]+[.!?\n]*/g) || [text];
-  var paraphrased = sentences.map(function(s) { return paraphraseSentence(s.trim()); }).join(' ');
-  var originalWords = text.split(/\s+/).length;
-  var newWords = paraphrased.split(/\s+/).length;
-
-  output.textContent = paraphrased;
-  stats.innerHTML = '<span>Original: ' + originalWords + ' words</span><span>Paraphrased: ' + newWords + ' words</span>';
+  var result = sentences.map(function(s) { return paraSentence(s.trim()); }).join(' ');
+  output.textContent = result;
+  stats.innerHTML = '<span>Original: ' + text.split(/\s+/).length + ' words</span><span>Paraphrased: ' + result.split(/\s+/).length + ' words</span>';
 }
 
-function paraphraseSentence(sentence) {
+function paraSentence(sentence) {
   if (!sentence) return '';
-  var words = sentence.split(/(\s+|[.,!?;:'"])/);
-  var synDict = PARA_MODE === 'formal' ? Object.assign({}, PARA_SYNONYMS, PARA_FORMAL)
-    : PARA_MODE === 'creative' ? Object.assign({}, PARA_SYNONYMS, PARA_CREATIVE)
-    : PARA_SYNONYMS;
+  var extra = PARA_MODE === 'formal' ? PARA_FORMAL : PARA_MODE === 'creative' ? PARA_CREATIVE : {};
+  var dict = Object.assign({}, PARA_SYNONYMS, extra);
+  var res = sentence;
 
-  return words.map(function(w) {
-    var clean = w.toLowerCase().replace(/[^a-z]/g, '');
-    if (clean.length < 3) return w;
-    var syns = synDict[clean];
-    // Higher replacement rate: 65% chance to replace if synonym available
-    if (syns && syns.length > 0 && Math.random() > 0.35) {
-      var chosen = syns[Math.floor(Math.random() * syns.length)];
-      if (w[0] === w[0].toUpperCase() && w.length > 1) {
-        chosen = chosen.charAt(0).toUpperCase() + chosen.slice(1);
-      }
-      var punct = w.replace(/[a-zA-Z]/g, '');
-      return chosen + punct;
+  var pk = Object.keys(PARA_PHRASES).sort(function(a,b){return b.length-a.length;});
+  for (var i = 0; i < pk.length; i++) {
+    if (Math.random() > 0.5) continue;
+    var re = new RegExp('\\b' + pk[i].replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'gi');
+    res = res.replace(re, PARA_PHRASES[pk[i]][Math.floor(Math.random() * PARA_PHRASES[pk[i]].length)]);
+  }
+
+  return res.split(/(\s+|[.,!?;:\'"])/).map(function(w) {
+    var c = w.toLowerCase().replace(/[^a-z]/g, '');
+    if (c.length < 3) return w;
+    var s = dict[c];
+    if (s && s.length > 0 && Math.random() > 0.4) {
+      var r = s[Math.floor(Math.random() * s.length)];
+      if (w[0] === w[0].toUpperCase() && w.length > 1) r = r.charAt(0).toUpperCase() + r.slice(1);
+      return r + w.replace(/[a-zA-Z]/g, '');
     }
     return w;
   }).join('');
