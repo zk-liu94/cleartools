@@ -652,9 +652,8 @@ function paraSentence(sentence) {
   }).join('');
 }
 
-// HuggingFace AI Paraphraser
-var HF_TOKEN = 'hf_UgOhRhgMKJESMfqesp' + 'sEwUlHiQRuMjtucz';
-var HF_MODEL = 'humarin/chatgpt_paraphraser_on_T5_base';
+// HuggingFace AI Paraphraser (proxied via Cloudflare Worker)
+var HF_API = 'https://dawn-cloud-353a.616699266.workers.dev';
 
 async function paraphraseAI() {
   var input = document.getElementById('para-input');
@@ -678,9 +677,9 @@ async function paraphraseAI() {
       : mode === 'creative' ? 'paraphrase creatively: ' + text
       : 'paraphrase: ' + text;
 
-    var res = await fetch('https://api-inference.huggingface.co/models/' + HF_MODEL, {
+    var res = await fetch(HF_API, {
       method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + HF_TOKEN, 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         inputs: prompt,
         parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7, max_length: 256 }
@@ -691,9 +690,9 @@ async function paraphraseAI() {
     if (res.status === 503) {
       loading.querySelector('span').textContent = 'Warming up AI model...';
       await new Promise(function(r) { setTimeout(r, 20000); });
-      res = await fetch('https://api-inference.huggingface.co/models/' + HF_MODEL, {
+      res = await fetch(HF_API, {
         method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + HF_TOKEN, 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           inputs: prompt,
           parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7, max_length: 256 }
