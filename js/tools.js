@@ -673,16 +673,14 @@ async function paraphraseAI() {
   try {
     // Prepare the prompt
     var mode = PARA_MODE;
-    var prompt = mode === 'formal' ? 'paraphrase formally: ' + text
-      : mode === 'creative' ? 'paraphrase creatively: ' + text
-      : 'paraphrase: ' + text;
+    var prompt = 'Rewrite the following text to be ' + mode + (mode === 'standard' ? '' : ' and academic') + ': "' + text + '"';
 
     var res = await fetch(HF_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         inputs: prompt,
-        parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7, max_length: 256 }
+        parameters: { temperature: mode === 'creative' ? 1.0 : 0.7, max_length: 256 }
       })
     });
 
@@ -695,7 +693,7 @@ async function paraphraseAI() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           inputs: prompt,
-          parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7, max_length: 256 }
+          parameters: { temperature: mode === 'creative' ? 1.0 : 0.7, max_length: 256 }
         })
       });
     }
