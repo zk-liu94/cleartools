@@ -672,46 +672,54 @@ async function paraphraseAI() {
   stats.textContent = '';
 
   try {
-    var result = await paraphraseHF(text);
-    loading.style.display = 'none';
-    if (result && result[0] && result[0].generated_text) {
-      output.textContent = result[0].generated_text;
-      stats.innerHTML = '<span>AI paraphrased</span><span>Model: chatgpt_paraphraser_on_T5_base</span>';
-    } else {
-      throw new Error('Unexpected response');
-    }
-  } catch (e) {
-    loading.style.display = 'none';
-    error.textContent = 'AI service unavailable. Try Paraphrase button instead.';
-    error.style.display = 'block';
-  }
-}
+    // Prepare the prompt
+    var mode = PARA_MODE;
+    var prompt = mode === 'formal' ? 'paraphrase formally: ' + text
+      : mode === 'creative' ? 'paraphrase creatively: ' + text
+      : 'paraphrase: ' + text;
 
-async function paraphraseHF(text) {
-  var mode = PARA_MODE;
-  var prefix = mode === 'formal' ? 'Make this text formal: ' : mode === 'creative' ? 'Make this text creative: ' : 'Paraphrase: ';
-  var res = await fetch('https://api-inference.huggingface.co/models/' + HF_MODEL, {
-    method: 'POST',
-    headers: { 'Authorization': 'Bearer ' + HF_TOKEN, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      inputs: prefix + text,
-      parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7 }
-    })
-  });
-  if (!res.ok) {
-    // Retry once if cold start (model loading)
+    var res = await fetch('https://api-inference.huggingface.co/models/' + HF_MODEL, {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + HF_TOKEN, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        inputs: prompt,
+        parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7, max_length: 256 }
+      })
+    });
+
+    // Handle 503 cold start - try once after waiting
     if (res.status === 503) {
-      await new Promise(r => setTimeout(r, 15000));
+      loading.querySelector('span').textContent = 'Warming up AI model...';
+      await new Promise(function(r) { setTimeout(r, 20000); });
       res = await fetch('https://api-inference.huggingface.co/models/' + HF_MODEL, {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + HF_TOKEN, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          inputs: prefix + text,
-          parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7 }
+          inputs: prompt,
+          parameters: { num_beams: 5, temperature: mode === 'creative' ? 1.0 : 0.7, max_length: 256 }
         })
       });
     }
-    if (!res.ok) throw new Error('API error: ' + res.status);
+
+    if (!res.ok) {
+      var errBody = await res.text();
+      throw new Error('HTTP ' + res.status + ': ' + errBody.substring(0, 200));
+    }
+
+    var result = await res.json();
+    loading.style.display = 'none';
+
+    if (result && result[0] && result[0].generated_text) {
+      var generated = result[0].generated_text;
+      output.textContent = generated;
+      stats.innerHTML = '<span>AI paraphrased</span><span>Model: T5-base</span>';
+    } else {
+      console.log('HF response:', JSON.stringify(result));
+      throw new Error('Unexpected API response format');
+    }
+  } catch (e) {
+    loading.style.display = 'none';
+    error.textContent = 'AI error: ' + e.message + '. Try the regular Paraphrase button.';
+    error.style.display = 'block';
   }
-  return await res.json();
 }
