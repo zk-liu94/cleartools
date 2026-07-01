@@ -3,3 +3,10 @@ Thumbs.db
 node_modules
 *.log
 Node.js安装路径/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
